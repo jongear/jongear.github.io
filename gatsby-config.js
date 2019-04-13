@@ -15,44 +15,11 @@ module.exports = {
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     {
-      resolve: 'gatsby-transformer-remark',
-      options: {
-        plugins: [
-          {
-            resolve: 'gatsby-remark-images',
-            options: {
-              maxWidth: 970,
-            },
-          },
-        ],
-      },
-    },
-    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'post',
         path: `${__dirname}/src/blog`,
       },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        path: `${__dirname}/src/assets`,
-        name: 'assets',
-      },
-    },
-    {
-      resolve: 'gatsby-source-filesystem',
-      options: {
-        path: path.join(__dirname, `src`, `assets`, `images`),
-        name: 'images',
-      },
-    },
-    {
-      resolve: "gatsby-source-filesystem",
-      options: {
-        path: `${__dirname}/src/pages`
-      }
     },
     'gatsby-plugin-sharp',
     `gatsby-transformer-sharp`,
@@ -90,9 +57,26 @@ module.exports = {
               maintainCase: false,
             },
           },
+          'gatsby-remark-copy-linked-files'
         ],
       },
     },
+
+    // {
+    //   resolve: 'gatsby-transformer-remark',
+    //   options: {
+    //     plugins: [
+    //       {
+    //         resolve: 'gatsby-remark-images',
+    //         options: {
+    //           maxWidth: 970,
+    //         },
+    //       },
+    //       'gatsby-remark-copy-linked-files'
+    //     ],
+    //   },
+    // },
+
     'gatsby-plugin-catch-links',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-lodash',
