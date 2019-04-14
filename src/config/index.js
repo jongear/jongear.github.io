@@ -17,7 +17,7 @@ module.exports = {
   userTwitter: '@GearedUpTech', // Twitter Username - Optional
   ogSiteName: 'gear.dev', // Facebook Site Name - Optional
   ogLanguage: 'en_US', // Facebook Language
-  googleAnalyticsID: 'UA-475796607-1',
+  googleAnalyticsID: 'UA-138298871-1',
 
   // Manifest and Progress color
   // See: https://developers.google.com/web/fundamentals/web-app-manifest/
