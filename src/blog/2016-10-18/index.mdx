@@ -1,0 +1,147 @@
+---
+date: '2016-10-18'
+title: 'TypeScript Angular Forms with Angular 1.5 Components'
+categories:
+  - Angular
+---
+
+Form validation, every front-end developers favorite topic. Recently I have been migrating
+form validation over to TypeScript and I have been pleasantly surprised by how clean TypeScript
+Angular forms development is. Consider the following form example that allows a user to enter
+a date into an input.
+
+## TypeScript Angular Forms
+
+**/app/my-component.component.html**
+
+```html
+<form name="$ctrl.myForm" ng-submit="$ctrl.submit()">
+  <input
+    type="text"
+    id="txtStartDate"
+    name="txtStartDate"
+    required=""
+    ng-model="$ctrl.startDate"
+    ng-maxlength="10"
+  />
+  <div class="error" ng-messages="$ctrl.myForm.txtStartDate.$error">
+    <span ng-message="required">
+      Start Date is required.
+    </span>
+    <span ng-message="maxlength">
+      Start Date must be less than 10 characters.
+    </span>
+  </div>
+
+  <button type="button" ng-click="$ctrl.cancel()">Cancel</button>
+  <button type="submit">Submit</button>
+</form>
+```
+
+The above is a simple form with one input for a date, a submit and a cancel button.
+There is some basic validation to ensure that the user submits a date that is no longer than ten characters.
+
+**/app/my-component.component.ts**
+
+```typescript
+module MyModule {
+  'use strict';
+
+  export class MyComponent {
+    model: any;
+    myForm: ng.IFormController;
+    startDate: string;
+
+    static $inject = ['$state'];
+    constructor(private $state: ng.ui.IStateService) {}
+
+    cancel() {
+      this.$state.go('root.home');
+    }
+
+    submit() {
+      if (!this.myForm.$valid) return false;
+
+      //form submit logic
+
+      return true;
+    }
+  }
+
+  angular.module('app').component(
+    'my-component',
+    angular.extend(
+      {
+        templateUrl: '/app/my-component.component.html',
+        bindings: {
+          model: '<',
+        },
+      },
+      { controller: MyComponent }
+    )
+  );
+}
+```
+
+What I enjoy most about using TypeScript for Angular forms is that I feel it really tries hard to step out
+of your way. Other than listing the type of the form, the code is identical to writing javascript validation.
+In the above example we have a simple form that ensures a user submits a value and it is at least 10 characters long.
+Nothing crazy here. But what if we want to ensure that the value entered is after today. Since this is not a standard
+validation we will need to create a custom validation to compensate.
+
+## Custom Validation
+
+Let's start by deciding on a value to show to our end user.
+
+**/app/my-component.component.html**
+
+```html
+<input
+  type="text"
+  id="txtStartDate"
+  name="txtStartDate"
+  required=""
+  ng-model="$ctrl.startDate"
+  ng-maxlength="10"
+/>
+<div class="error" ng-messages="$ctrl.myForm.txtStartDate.$error">
+  <span ng-message="required">
+    Start Date is required.
+  </span>
+  <span ng-message="maxlength">
+    Start Date must be less than 10 characters.
+  </span>
+  <span ng-message="beforeToday">
+    Start Date must be after today.
+  </span>
+</div>
+```
+
+Notice how our input has not changed. We have simply added a new ng-message for warning users they cannot select a date before today.
+
+**/app/my-component.component.ts**
+
+```typescript
+isValid(){
+  var today = moment();
+  var momentStartDate = moment(this.startDate, "MM/DD/YYYY");
+  this.myForm["txtStartDate"].$error.beforeToday = momentStartDate < today;
+}
+
+submit(){
+  this.isValid();
+
+  if (!this.myForm.$valid) return false;
+
+  //form submit logic
+
+  return true;
+}
+```
+
+And here is the logic to allow the component to raise our new error message. In this example I'm leveraging
+[Moment.js](http://momentjs.com/) to do a user text conversion for date comparison. If the user enters a value
+that is not greater than today we throw our beforeToday error. Which will be caught when we attempt to check the form's validity.
+
+And that about wraps up this segment. Check out the Angular documentation for more information about using the
+[Angular FormController](https://docs.angularjs.org/api/ng/type/form.FormController)
