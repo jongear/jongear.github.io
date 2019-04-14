@@ -1,16 +1,16 @@
 ---
-date: "2017-09-17"
-title: "Script deploy gotcha with Travis CI"
+date: '2017-09-17'
+title: 'Script deploy gotcha with Travis CI'
 categories:
   - Travis CI
 ---
 
-Recently I was attempting to leverage the [script deploy provider](https://docs.travis-ci.com/user/deployment/script/) 
+Recently I was attempting to leverage the [script deploy provider](https://docs.travis-ci.com/user/deployment/script/)
 offered by [Travis CI](https://github.com/travis-ci). This provider is similar to the [after_success](https://docs.travis-ci.com/user/customizing-the-build#The-Build-Lifecycle)
- liftime hook but adds additional customization in the form of offering the added capability to control deploys based on target branch.
+liftime hook but adds additional customization in the form of offering the added capability to control deploys based on target branch.
 
 I prefer to use the [script deployment provider](https://docs.travis-ci.com/user/deployment/script/) over the [after_success](https://docs.travis-ci.com/user/customizing-the-build#The-Build-Lifecycle)
- lifetime hook due to it’s intuitive declarative syntax:
+lifetime hook due to it’s intuitive declarative syntax:
 
 ```yaml
 deploy:
@@ -24,49 +24,49 @@ deploy:
 
 Straight forward, obvious to understand, right? Well almost. When first deploying my application I was met with this nefarious error
 
-```sh
+```bash
 - Script failed with status 127
 - failed to deploy
 ```
 
-[Some frantic googling](https://stackoverflow.com/questions/42154912/permission-denied-for-build-sh-file/42187039#42187039) led me to the conclusion 
+[Some frantic googling](https://stackoverflow.com/questions/42154912/permission-denied-for-build-sh-file/42187039#42187039) led me to the conclusion
 that my script was not executable by Travis, which would make sense as my initial start log never fired
 
-```sh
+```bash
 echo "###### Starting Deployment ######"
 ```
 
 I then attempted to apply the following to my script in my git repository
 
-```sh
+```bash
 git update-index --add --chmod=+x deploy.sh
 ```
 
 Which, unfortunately, did not yield any meaningful result when merging from feature branch to deployment branch.
 
-I did find that if I move this command into my Travis build script as a [before_deploy](https://docs.travis-ci.com/user/customizing-the-build#Deploying-your-Code) 
+I did find that if I move this command into my Travis build script as a [before_deploy](https://docs.travis-ci.com/user/customizing-the-build#Deploying-your-Code)
 method, it allows my deploy to run as intended.
 
 ```yaml
 before_deploy:
   - chmod +x ./deploy.sh.sh
-``` 
+```
 
 Although this does work, I found it a little unsavory to need to run a command outside of my deploy logic block in order to run my custom script.
 
 ## Solution
 
-After [further frantic googling](https://github.com/travis-ci/travis-ci/issues/5538#issuecomment-265956466), I stumbled across a rather elegant 
+After [further frantic googling](https://github.com/travis-ci/travis-ci/issues/5538#issuecomment-265956466), I stumbled across a rather elegant
 solution which suggested to apply the chmod in conjunction with the && operator.
 
-```sh
+```bash
 chmod +x ./deploy.sh && ./deploy.sh
 ```
 
-The beauty of this solution is that it removes the need to run chmod if our previous steps fail. And for completeness, here is my final deploy script, 
+The beauty of this solution is that it removes the need to run chmod if our previous steps fail. And for completeness, here is my final deploy script,
 locked down to only deploy out of my dev branch, to protect against accidental deploys out of my feature branches
 
-```yml
+```yaml
 deploy:
   provider: script
   script: chmod +x ./deploy.sh && ./deploy.sh
