@@ -5,7 +5,7 @@ categories:
   - Serverless
 ---
 
-import slsImg from './serverless-dashboard.gif';
+import slsDashboardImg from './serverless-dashboard.gif';
 
 Serverless Computing has steadily picked up steam since AWS released Lambda in 2014. 
 Serverless Computing or FaaS (Function as a Service) is a subsector of cloud computing that 
@@ -46,4 +46,38 @@ Originally known as JAWS before rebranding, recently hit version 1.10 and curren
 Google Cloud. Serverless supports Node.js on all platforms and attempts to work as “close to the metal” as 
 possible to provide a clean API. They also offer a dashboard for ease of deploy, logging and stack rollout.
 
-<img src={slsImg} style={{height:'600px'}} />
+<img src={slsDashboardImg} style={{height:'600px'}} />
+
+### [IronFunctions](https://www.iron.io/)
+Leverages Docker as an abstraction layer between user codebases and the acted upon environment. This offers 
+a more user friendly approach to jumping into Servereless development.
+
+![](./iron-io-platform.png)
+
+## Serverless Computing providers
+
+![](./serverless-providers.jpg)
+
+### [AWS – Lambda](https://aws.amazon.com/lambda/)
+
+|                        |                         |
+|------------------------|-------------------------|
+|**Supported Languages:**|Node.js, Python, Java, C#|
+|**Max Runtime:**  	     |5 Minutes                |
+|**Max Memory:**         |1,536MB                  |
+
+### [Azure – Functions](https://azure.microsoft.com/en-us/services/functions/)
+
+|                        |                                                         |
+|------------------------|---------------------------------------------------------|
+|**Supported Languages:**|Node.js, C#, F#, Python, PHP, Bash, Batch, and PowerShell|
+|**Max Runtime:**  	     |5 Minutes                                                |
+|**Max Memory:**         |1,536MB                                                  |
+
+### [Google Cloud – Functions](https://cloud.google.com/functions/)
+
+|                        |                                                         |
+|------------------------|---------------------------------------------------------|
+|**Supported Languages:**|Node.js, C#, F#, Python, PHP, Bash, Batch, and PowerShell|
+|**Max Runtime:**  	     |5 Minutes                                                |
+|**Max Memory:**         |1,536MB                                                  |
