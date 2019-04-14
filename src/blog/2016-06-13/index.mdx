@@ -1,0 +1,147 @@
+---
+date: '2016-06-13'
+title: 'Make a TypeScript Angular 1.5 Component look like a Angular 2 Component'
+categories:
+  - Angular
+---
+
+Recently I started wondering if it was possible to create an Angular 1.5 Component
+that would look and act similar to an Angular 2 Component. The motive behind this
+was fueled by the idea that if I could convert an existing Angular 1.5 code base
+over to a more Angular 2 compliant syntax it would make adoption of Angular 2 significantly
+easier. With that in mind I set out to make my TypeScript Angular 1.5 Component look
+as similar to a Angular 2 Component as I could. What follows is my first pass at
+beginning to make a wrapper that mirrors the Angular 2 syntax.
+
+Consider the following piece of code written in JavaScript utilizing Angular 1.5
+
+```javascript
+(function () {
+    'use strict';
+    angular
+        .module('app.home')
+        .component('jigHome',
+        {
+            templateUrl: '/app/home/home.html',
+            controller: homeCtrl,
+            controllerAs: 'ctrl',
+            bindings: {
+                setup: '<'
+            }
+        });
+
+    homeCtrl.$inject = [HomeService'];
+    function homeCtrl(HomeService) {
+        var ctrl = this;
+
+        //ctrl.setup -- this is our bound property
+    };
+})();
+```
+
+To me this is as barebones of an example as one would need to prove out a concept.
+
+- The component has a templateUrl
+- The component has an inject parameter
+- The component has a binding required from a routing resolution.
+
+The first step towards making our Angular 1.5 Component appear similar to an Angular 2 Component
+is to create a Component decorator that takes in similar parameters. For that we will leverage
+ng.IComponentOptions from the Angular TypeScript definition file [angular.d.ts]
+
+```typescript
+function Component(
+  moduleName: string,
+  selector: string,
+  options: ng.IComponentOptions
+) {
+  return (controller: Function) => {
+    var mod = angular.module(moduleName);
+    mod.component(
+      selector,
+      angular.extend(options, { controller: controller })
+    );
+  };
+}
+```
+
+Unfortunately ng.IcomponentOptions does not have support for selector so I choose to leave this as
+well as the module name as manually added string parameters.
+
+The next step is to ensure that you have experimental TypeScript Decorators enabled
+
+**tsconfig.json**
+
+```json
+//If you are using VS Code or have a tsconfig file, make sure this line is present.
+"experimentalDecorators": true
+```
+
+**.NET**
+
+```xml
+//  -- if you are using .NET you will need to add this
+//  -- add after TypeScriptTools in the first PropertyGroup tag
+
+ <propertygroup>
+    ....
+    <typescripttoolsversion>1.8</typescripttoolsversion>
+    <typescriptexperimentaldecorators>true</typescriptexperimentaldecorators>
+ </propertygroup>
+```
+
+After the configuration changes are made you will be able to create your new decorated Component.
+It's important to note that even though I named my exported class HomeComponent it is actually a
+controller utilized by the component, however using this naming style lines up more closely with
+the Angular 2 specification.
+
+```typescript
+@Component('app.home', 'jigHome', {
+  templateUrl: '/app/home/home.html',
+  controllerAs: 'ctrl',
+  bindings: {
+    setup: '<',
+  },
+})
+export class HomeComponent {
+  static $inject = ['HomeService'];
+  setup: any;
+  homeService: HomeService;
+
+  constructor(homeService: HomeService) {
+    this.$timeout = $timeout;
+    this.homeService = homeService;
+    //this.setup -- this is our bound property
+  }
+}
+```
+
+Let's see how this compares to it's Angular 2 counterpart
+
+```typescript
+@Component({
+  selector: 'jig-home',
+  templateUrl: '/app/home/home.html',
+  providers: [HomeService],
+})
+export class HomeComponent {
+  constructor(private homeService: HomeService) {}
+  ngOnInit() {
+    this.homeService.get();
+  }
+}
+```
+
+There is definitely a way to go before the signatures mirror however for 6 lines of code I feel
+it's a terrific start. I'll keep fiddling with this throughout the week and hopefully release a
+follow up with more compliant syntax.
+
+For now, here are what I would deem the low hanging fruits.
+
+- Create model for passing into @Component
+- Move .\$inject call into the Providers array [will probably need to be sent as a string and injected into the controller on return]
+- Wrap ng.ICOmponentOptions in the pass through model
+
+UPDATE: I hgihly recommend checking out [ng-metadata](https://github.com/ngParty/ng-metadata).
+This project has come a long way and appears to be a serious implementation of Angular 2 syntax for Angular 1.
+[Read more...](/ng-metadata-is-the-answer-to-upgrading-to-angular-2)
