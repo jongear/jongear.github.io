@@ -2,10 +2,10 @@
 /* eslint no-unused-vars: 0 */
 /* eslint react/prop-types: 0 */
 /* eslint react/destructuring-assignment: 0 */
-import React from 'react'
-import Highlight, { defaultProps } from 'prism-react-renderer'
-import theme from 'prism-react-renderer/themes/vsDark'
-import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live'
+import React from 'react';
+import Highlight, { defaultProps } from 'prism-react-renderer';
+import theme from 'prism-react-renderer/themes/vsDark';
+import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 
 const Code = ({ codeString, language, ...props }) => {
   if (props['react-live']) {
@@ -15,10 +15,15 @@ const Code = ({ codeString, language, ...props }) => {
         <LiveError />
         <LivePreview />
       </LiveProvider>
-    )
+    );
   }
   return (
-    <Highlight {...defaultProps} code={codeString} language={language} theme={theme}>
+    <Highlight
+      {...defaultProps}
+      code={codeString}
+      language={language}
+      theme={theme}
+    >
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre className={className} style={style}>
           {tokens.map((line, i) => (
@@ -31,7 +36,7 @@ const Code = ({ codeString, language, ...props }) => {
         </pre>
       )}
     </Highlight>
-  )
-}
+  );
+};
 
-export default Code
+export default Code;

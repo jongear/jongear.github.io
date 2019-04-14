@@ -1,12 +1,12 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import { Link, graphql } from 'gatsby'
-import styled from 'styled-components'
-import kebabCase from 'lodash/kebabCase'
-import MDXRenderer from 'gatsby-mdx/mdx-renderer'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link, graphql } from 'gatsby';
+import styled from 'styled-components';
+import kebabCase from 'lodash/kebabCase';
+import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 
-import { Layout, Wrapper, Header, Subline, SEO, PrevNext } from '../components'
-import config from '../config'
+import { Layout, Wrapper, Header, Subline, SEO, PrevNext } from '../components';
+import config from '../config';
 
 const Content = styled.article`
   grid-column: 2;
@@ -40,18 +40,21 @@ const Content = styled.article`
     margin-bottom: 1rem;
     font-size: 16px;
   }
-`
+`;
 
 const Title = styled.h1`
   margin-bottom: 1rem;
-`
+`;
 
 const PostContent = styled.div`
   margin-top: 4rem;
-`
+`;
 
-const Post = ({ pageContext: { slug, prev, next }, data: { mdx: postNode } }) => {
-  const post = postNode.frontmatter
+const Post = ({
+  pageContext: { slug, prev, next },
+  data: { mdx: postNode },
+}) => {
+  const post = postNode.frontmatter;
 
   return (
     <Layout customSEO>
@@ -78,10 +81,10 @@ const Post = ({ pageContext: { slug, prev, next }, data: { mdx: postNode } }) =>
         </Content>
       </Wrapper>
     </Layout>
-  )
-}
+  );
+};
 
-export default Post
+export default Post;
 
 Post.propTypes = {
   pageContext: PropTypes.shape({
@@ -92,14 +95,14 @@ Post.propTypes = {
   data: PropTypes.shape({
     mdx: PropTypes.object.isRequired,
   }).isRequired,
-}
+};
 
 Post.defaultProps = {
   pageContext: PropTypes.shape({
     next: null,
     prev: null,
   }),
-}
+};
 
 export const postQuery = graphql`
   query postBySlug($slug: String!) {
@@ -122,4 +125,4 @@ export const postQuery = graphql`
       }
     }
   }
-`
+`;
