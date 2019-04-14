@@ -1,5 +1,4 @@
 const config = require('./src/config')
-const path = require('path');
 
 const pathPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix
 
@@ -9,11 +8,12 @@ module.exports = {
     siteUrl: config.siteUrl + pathPrefix,
     title: 'Jon Gear',
     author: 'Jon Gear',
-    description: 'Jon Gear\'s Portfolio'
+    description: "Jon Gear's Portfolio",
   },
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
+    'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-source-filesystem',
       options: {
@@ -21,8 +21,6 @@ module.exports = {
         path: `${__dirname}/src/blog`,
       },
     },
-    'gatsby-plugin-sharp',
-    `gatsby-transformer-sharp`,
     {
       resolve: 'gatsby-plugin-google-analytics',
       options: {
@@ -32,7 +30,6 @@ module.exports = {
     {
       resolve: 'gatsby-mdx',
       options: {
-        root: __dirname,
         gatsbyRemarkPlugins: [
           {
             resolve: 'gatsby-remark-external-links',
@@ -57,26 +54,10 @@ module.exports = {
               maintainCase: false,
             },
           },
-          'gatsby-remark-copy-linked-files'
+          //'gatsby-remark-copy-linked-files'
         ],
       },
     },
-
-    // {
-    //   resolve: 'gatsby-transformer-remark',
-    //   options: {
-    //     plugins: [
-    //       {
-    //         resolve: 'gatsby-remark-images',
-    //         options: {
-    //           maxWidth: 970,
-    //         },
-    //       },
-    //       'gatsby-remark-copy-linked-files'
-    //     ],
-    //   },
-    // },
-
     'gatsby-plugin-catch-links',
     'gatsby-plugin-sitemap',
     'gatsby-plugin-lodash',
@@ -95,6 +76,5 @@ module.exports = {
     },
     'gatsby-plugin-offline',
     'gatsby-plugin-netlify',
-    'gatsby-plugin-sass'
   ],
 }
