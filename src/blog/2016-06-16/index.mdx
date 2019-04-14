@@ -1,0 +1,111 @@
+---
+date: '2016-06-16'
+title: 'ng-metadata is the answer to upgrading to Angular 2'
+categories:
+  - Angular
+---
+
+[Earlier this week](/angular-1-5-component-mirror-angular-2) I spoke to making a poor man’s TypeScript
+Component decorator to begin to make Angular 1.x syntax more Angular 2.x compliant. Since then one of
+my coworkers brought to my attention a phenomenal library that extends on what I spoke to. ng-metadata
+is a library that allows you to wrap Angular 1.x code in TypeScript decorators to give the appearance of
+Angular 2 code. This is a huge benefit because it will allow for more gradual adoption of the Angular 2 specification.
+
+This is a code snippet directly from ng-metadata that shows what your Angular 1.x Component code can be rewritten to look like
+
+**Angular 1.x with ngMetadata and Typescript:**
+
+```typescript
+// bootstrap.ts
+import { bootstrap } from 'ng-metadata/platform';
+import { HeroModule } from './hero';
+
+bootstrap(HeroModule);
+
+// hero.ts
+import * as angular from 'angular';
+import { provide } from 'ng-metadata/core';
+import { HeroComponent } from './hero.component';
+import { HeroService } from './hero.service';
+
+export const HeroModule = angular
+  .module('hero', [])
+  .directive(...provide(HeroComponent))
+  .service(...provide(HeroService)).name;
+
+// hero.service.ts
+import { Injectable, Inject } from 'ng-metadata/core';
+
+@Injectable()
+export class HeroService {
+  constructor(@Inject('$http') private $http: ng.IHttpService) {}
+  fetchAll() {
+    return this.$http.get('/api/heroes');
+  }
+}
+
+// hero.component.ts
+import { Component, Inject, Input, Output } from 'ng-metadata/core';
+import { HeroService } from './hero.service';
+
+@Component({
+  selector: 'hero-cmp',
+  templateUrl: 'hero.html',
+  legacy: { transclude: true },
+})
+export class HeroComponent {
+  @Input() name: string;
+  @Output() onCall: Function;
+
+  constructor(
+    // we need to inject via @Inject because angular 1 doesn't give us proper types
+    @Inject('$log') private $log: ng.ILogService,
+    // here we are injecting by Type
+    // which is possible thanks to reflect-metadata and Typescript and because our service
+    // is defined as a class
+    private heroSvc: HeroService
+  ) {}
+
+  ngOnInit() {
+    /* your init logic */
+  }
+}
+```
+
+I have to admit, this is a very impressive port. The only real criticism I have of this
+port is that it does not support Angular 2’s providers array in the Component decorator.
+
+```typescript
+// https://angular.io/docs/ts/latest/tutorial/toh-pt4.html
+// app/app.component.ts
+
+@Component({
+  providers: [HeroService],
+})
+export class AppComponent implements OnInit {
+  title = 'Tour of Heroes';
+  heroes: Hero[];
+  selectedHero: Hero;
+
+  constructor(private heroService: HeroService) {}
+}
+```
+
+That being said I think that what the team at ng-metadata has done with the Inject decorator
+is rather ingenious. I like that you can designate a service as @Injectable and forgo showing
+any code in your @Component or you can opt for the more explicit route and use @Inject in the
+constructor to make the DI function more obvious to the end developer.
+
+For a more detailed breakdown of ng-metadata’s capabilities, please visit their
+[API docs](https://github.com/ngParty/ng-metadata/blob/master/docs/API.md)
+
+**UPDATE: 6/16/16**
+
+I was incorrect. ng-metadata does have support for the providers array out of the box!
+
+[ng-metadata — @Component](https://github.com/ngParty/ng-metadata/blob/master/docs/API.md#component)
+
+| Property       | DataType                       | Description                                                                      |
+| -------------- | ------------------------------ | -------------------------------------------------------------------------------- |
+| **providers?** | Array<Injectables&#124;string> | Any providers that this component or any of it’s children depends on. This isn’t |
+|                |                                | doing anything for now, just for visual experience and mirroring ng2 api         |
