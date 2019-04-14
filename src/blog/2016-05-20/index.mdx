@@ -20,12 +20,9 @@ lied in our use of Session variables. When you use session variables MVC will ta
 all concurrent requests from a user and make them synchronous to ensure that session
 variable data integrity is preserved.
 
-![Concurrent Session explanation](./concurrent-session.png)
+![Concurrent Session explanation](./assets/concurrent-session.png)
 
-<p style="text-align: center;">
-  _[ASP.NET Session State
-  Overview](https://docs.microsoft.com/en-us/previous-versions/ms178581(v=vs.140))_
-</p>
+[ASP.NET Session StateOverview](<https://docs.microsoft.com/en-us/previous-versions/ms178581(v=vs.140)>)
 
 The article states that if we apply the following ReadOnly flag to any controller that
 is not changing Session variables we will be able to continue to make concurrent requests.
