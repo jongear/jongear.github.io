@@ -52,8 +52,8 @@ const Contact = () => (
       <Content>
         <h1>Contact</h1>
         <p>
-          Super cool intro text to get people contacting me! It uses Netlify's
-          form feature.
+          If you would like to contact me please leave your name, email and your
+          reason for reaching out and I will get back to you as soon as I can.
         </p>
         <form
           name="contact-form"
