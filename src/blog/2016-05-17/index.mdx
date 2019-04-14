@@ -1,0 +1,52 @@
+---
+date: '2016-05-20'
+title: 'Upload a file with $http.post in AngularJS 1.5.5'
+categories:
+  - Angular
+---
+
+Recently I was porting a jQuery Bootstrap file upload over to an [Angular 1.5.5 modal](https://code.angularjs.org/1.5.5/docs/guide)
+and ran into an issue when I tried to upload a file with $http.post in AngularJS. Essentially 
+I was able to receive all of my form data on the server except for my file. The main gotcha 
+in this scenario is that we are submitting our data via an AJAX POST request instead of a 
+form submit. This is problematic because the Content-Type of the post will come through as 
+application/json which the server will interpret incorrectly. Needless to say, the default 
+implementation of $http.post() does not handle this well. Here is a trick I used to allow the
+server to receive the file as part of my model.
+
+```javascript
+$scope.upload = function() {
+    var model = {
+        firstName: $scope.userModel.firstName,
+        lastName: $scope.userModel.lastName,
+        profilePicture: document.getElementById(‘attachment’).file[0]
+    };
+    var configs = {
+        headers: {‘Content-Type’: undefined },
+        transformRequest: function (data) {
+            var formData = new FormData();
+            angular.forEach(data, function (value, key) {
+                formData.append(key, value);
+            });
+            return formData;
+        }
+    };
+    $http.post(uploadUrl, model, configs).then(function(response) {
+        return response.data;
+    });
+};
+```
+
+The most important piece to note is the Content-Type in the config object. Setting this to false does
+not work in Angular 1.5.5. You must set it to undefined. If you are utilizing an earlier version of
+Angular earlier than 1.2 you should use false.
+
+The second important piece to note is the use of the transformRequest. This can be used in either version.
+I simply needed all model properties to be registered as FormData so I had the transform loop through each
+value of my model and append it to the FormData object.
+
+As a fair warning, I have not attempted to use this solution for multiple file uploads. However I would
+love to know if this approach is successful. It seems like it would be considering the generic nature of the upload logic.
+
+This approach works in IE10, Chrome, Firefox and Safari. If you have another browser in mind you can
+check with [Can I Use.](https://caniuse.com/#feat=fileapi)
