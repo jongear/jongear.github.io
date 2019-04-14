@@ -28,7 +28,7 @@ Netlify will build the Gatsby site into a static distributable and publish it to
 
 True, Netlify can render previews and publish on it's own but there is one piece
 that Netlify cannot do which I deem critical to long term stability. That piece is
-running linting and testing checks. It is important to me that not only by code builds
+running linting and testing checks. It is important to me that not only my code builds
 and deploys properly but that it adheres to a set standard to help enforce clenliness
 and longevity of the project.
 
