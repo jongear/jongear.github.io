@@ -1,0 +1,54 @@
+---
+date: '2016-08-25'
+title: 'Custom Status Code for JSON using MVC on Azure'
+categories:
+  - ASP.NET
+  - MVC
+---
+
+Recently I was tinkering with a MVC side project hosted on Azure and I ran into a curious scenario
+where my custom JSON errors were not returning properly. When appending a custom status code for JSON
+using MVC on Azure I was receiving responses in plain text/html when this exact solution worked perfectly
+fine locally. Puzzled by this I attempted to create the same call in Web API and was further surprised
+to learn that it works perfectly fine in Web API.
+
+```csharp
+[HttpPost]
+public JsonResult Index(UploadViewModel model)
+{
+    if (model.UploadFile == null)
+    {
+        Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        return Json("File Required");
+    }
+
+    // more code here...
+}
+```
+
+## Some config updates required
+
+After many failed attempts at tweaking the web.config, editing the proxy, adding CORS. I stumbled upon
+a stackoverflow post that mentioned that MVC does not have pass through enabled by default for MVC. Adding the
+following line to my Web.config allowed my solution to work as intended in Azure
+
+```xml
+<system.webserver>
+  <httperrors existingresponse="PassThrough"></httperrors>
+</system.webserver>
+```
+
+## So what exactly is going on here?
+
+Azure is capturing the error, processing it and passing it along to the client as text. Enabling PassThrough
+tells the eserver to leave the respone as is. This has a slightly nefarious blowback as it also changes how
+the server handles other errors such as 404 errors. If you browse to a path that doesn’t exist you usually
+see the server generated 404 landing page. With PassThrough turned on we will receive a 404 status with a
+blank page instead.
+
+Hopefullly this saves someone else some time in the future.
+
+**Resources:**
+
+[ASP.NET+Azure 400 Bad Request doesn’t return JSON data](https://stackoverflow.com/questions/15532667/asp-netazure-400-bad-request-doesnt-return-json-data/15532685)
+[What does existingResponse=“PassThrough” mean in IIS?](https://stackoverflow.com/questions/31040671/what-does-existingresponse-passthrough-mean-in-iis/31041696)
