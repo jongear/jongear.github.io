@@ -7,11 +7,11 @@ module.exports = {
   siteUrl: 'https://gear.dev', // Domain of your site. No trailing slash!
   siteLanguage: 'en', // Language Tag on <html> element
   siteHeadline: "Jon Gear's Site", // Headline for schema.org JSONLD
-  siteBanner: '/social/banner.jpg', // Your image for og:image tag. You can find it in the /static folder
+  siteBanner: 'src/images/logo.svg', // Your image for og:image tag. You can find it in the /static folder
   favicon: 'src/images/logo.svg', // Your image for favicons. You can find it in the /src folder
   siteDescription: "Jon Gear's personal website and blog", // Your site description
   author: 'Jon Gear', // Author for schemaORGJSONLD
-  siteLogo: '/social/logo.png', // Image for schemaORGJSONLD
+  siteLogo: 'src/images/logo.svg', // Image for schemaORGJSONLD
 
   // siteFBAppID: '123456789', // Facebook App ID - Optional
   userTwitter: '@GearedUpTech', // Twitter Username - Optional
@@ -21,6 +21,6 @@ module.exports = {
 
   // Manifest and Progress color
   // See: https://developers.google.com/web/fundamentals/web-app-manifest/
-  themeColor: '#3498DB',
-  backgroundColor: '#2b2e3c',
+  themeColor: '#75A7C6',
+  backgroundColor: '#1C2426',
 };
