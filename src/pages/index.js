@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import theme from '../config/theme';
+import logo from '../images/logo.svg';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -68,7 +69,7 @@ const Card = styled.div`
   align-items: center;
   justify-content: center;
 
-  background: ${props => props.theme.colors.primary};
+  background: ${props => props.theme.colors.homepageCard};
 
   min-width: 600px;
   max-width: 700px;
@@ -85,7 +86,6 @@ const Logo = styled.div`
   & .img-circle {
     width: 150px;
     height: 150px;
-    border-radius: 100%;
   }
 `;
 
@@ -117,7 +117,7 @@ const Links = styled.ul`
 
     &:hover {
       box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
-      background: #ff6912;
+      background: ${props => props.theme.colors.primary};
     }
 
     a {
@@ -158,10 +158,7 @@ export default class IndexPage3 extends React.Component {
           <Container>
             <Card>
               <Logo>
-                <img
-                  className="img-circle"
-                  src="https://pbs.twimg.com/profile_images/971760039328436224/UvVuvduk_400x400.jpg"
-                />
+                <img className="img-circle" src={logo} />
               </Logo>
               <Welcome>Hello, I'm Jon</Welcome>
               <Tagline>
