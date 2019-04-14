@@ -1,27 +1,27 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import Helmet from 'react-helmet'
+import React from 'react';
+import PropTypes from 'prop-types';
+import Helmet from 'react-helmet';
 
-import config from '../config'
+import config from '../config';
 
 const SEO = props => {
-  const { postNode, postPath, article, buildTime } = props
+  const { postNode, postPath, article, buildTime } = props;
 
-  let title
-  let description
+  let title;
+  let description;
 
-  const realPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix
-  const homeURL = `${config.siteUrl}${realPrefix}`
-  const URL = `${homeURL}${postPath || ''}`
-  const image = `${homeURL}${config.siteBanner}`
+  const realPrefix = config.pathPrefix === '/' ? '' : config.pathPrefix;
+  const homeURL = `${config.siteUrl}${realPrefix}`;
+  const URL = `${homeURL}${postPath || ''}`;
+  const image = `${homeURL}${config.siteBanner}`;
 
   if (article) {
-    const postMeta = postNode.frontmatter
-    title = `${postMeta.title} | ${config.siteTitle}`
-    description = postNode.excerpt
+    const postMeta = postNode.frontmatter;
+    title = `${postMeta.title} | ${config.siteTitle}`;
+    description = postNode.excerpt;
   } else {
-    title = config.siteTitleAlt
-    description = config.siteDescription
+    title = config.siteTitleAlt;
+    description = config.siteDescription;
   }
 
   // schema.org in JSONLD format
@@ -60,7 +60,7 @@ const SEO = props => {
       '@type': 'ImageObject',
       url: image,
     },
-  }
+  };
 
   // Initial breadcrumb list
 
@@ -81,9 +81,9 @@ const SEO = props => {
       },
       position: 2,
     },
-  ]
+  ];
 
-  let schemaArticle = null
+  let schemaArticle = null;
 
   if (article) {
     schemaArticle = {
@@ -122,7 +122,7 @@ const SEO = props => {
         url: image,
       },
       mainEntityOfPage: URL,
-    }
+    };
     // Push current blogpost into breadcrumb list
     itemListElement.push({
       '@type': 'ListItem',
@@ -131,7 +131,7 @@ const SEO = props => {
         name: title,
       },
       position: 3,
-    })
+    });
   }
 
   const breadcrumb = {
@@ -140,7 +140,7 @@ const SEO = props => {
     description: 'Breadcrumbs list',
     name: 'Breadcrumbs',
     itemListElement,
-  }
+  };
 
   return (
     <Helmet>
@@ -150,41 +150,57 @@ const SEO = props => {
       <meta name="image" content={image} />
       <meta name="gatsby-starter" content="Gatsby Starter Minimal Blog" />
       <meta property="og:locale" content={config.ogLanguage} />
-      <meta property="og:site_name" content={config.ogSiteName ? config.ogSiteName : ''} />
+      <meta
+        property="og:site_name"
+        content={config.ogSiteName ? config.ogSiteName : ''}
+      />
       <meta property="og:url" content={URL} />
       <meta property="og:type" content={article ? 'article' : 'website'} />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
       <meta property="og:image:alt" content={description} />
-      {config.siteFBAppID && <meta property="fb:app_id" content={config.siteFBAppID} />}
+      {config.siteFBAppID && (
+        <meta property="fb:app_id" content={config.siteFBAppID} />
+      )}
       <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:creator" content={config.userTwitter ? config.userTwitter : ''} />
+      <meta
+        name="twitter:creator"
+        content={config.userTwitter ? config.userTwitter : ''}
+      />
       <meta name="twitter:title" content={title} />
       <meta name="twitter:url" content={config.siteUrl} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
       <meta name="twitter:image:alt" content={description} />
       {/* Insert schema.org data conditionally (webpage/article) + everytime (breadcrumbs) */}
-      {!article && <script type="application/ld+json">{JSON.stringify(schemaOrgWebPage)}</script>}
-      {article && <script type="application/ld+json">{JSON.stringify(schemaArticle)}</script>}
+      {!article && (
+        <script type="application/ld+json">
+          {JSON.stringify(schemaOrgWebPage)}
+        </script>
+      )}
+      {article && (
+        <script type="application/ld+json">
+          {JSON.stringify(schemaArticle)}
+        </script>
+      )}
       <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
     </Helmet>
-  )
-}
+  );
+};
 
-export default SEO
+export default SEO;
 
 SEO.propTypes = {
   postNode: PropTypes.object,
   postPath: PropTypes.string,
   article: PropTypes.bool,
   buildTime: PropTypes.string,
-}
+};
 
 SEO.defaultProps = {
   postNode: null,
   postPath: null,
   article: false,
   buildTime: null,
-}
+};

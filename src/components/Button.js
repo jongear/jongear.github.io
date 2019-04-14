@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 const Button = styled.button`
   background: ${props => props.theme.colors.primary};
@@ -25,6 +25,6 @@ const Button = styled.button`
     margin-right: 0.75rem;
     fill: ${props => props.theme.colors.white};
   }
-`
+`;
 
-export default Button
+export default Button;

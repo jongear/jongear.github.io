@@ -1,41 +1,41 @@
-const _ = require('lodash')
+const _ = require('lodash');
 
 // graphql function doesn't throw an error so we have to check to check for the result.errors to throw manually
 const wrapper = promise =>
   promise.then(result => {
     if (result.errors) {
-      throw result.errors
+      throw result.errors;
     }
-    return result
-  })
+    return result;
+  });
 
 exports.onCreateNode = ({ node, actions }) => {
-  const { createNodeField } = actions
+  const { createNodeField } = actions;
 
-  let slug
+  let slug;
 
   if (node.internal.type === 'Mdx') {
     if (
       Object.prototype.hasOwnProperty.call(node, 'frontmatter') &&
       Object.prototype.hasOwnProperty.call(node.frontmatter, 'slug')
     ) {
-      slug = `/${_.kebabCase(node.frontmatter.slug)}`
+      slug = `/${_.kebabCase(node.frontmatter.slug)}`;
     }
     if (
       Object.prototype.hasOwnProperty.call(node, 'frontmatter') &&
       Object.prototype.hasOwnProperty.call(node.frontmatter, 'title')
     ) {
-      slug = `/${_.kebabCase(node.frontmatter.title)}`
+      slug = `/${_.kebabCase(node.frontmatter.title)}`;
     }
-    createNodeField({ node, name: 'slug', value: slug })
+    createNodeField({ node, name: 'slug', value: slug });
   }
-}
+};
 
 exports.createPages = async ({ graphql, actions }) => {
-  const { createPage } = actions
+  const { createPage } = actions;
 
-  const postTemplate = require.resolve('./src/templates/post.js')
-  const categoryTemplate = require.resolve('./src/templates/category.js')
+  const postTemplate = require.resolve('./src/templates/post.js');
+  const categoryTemplate = require.resolve('./src/templates/category.js');
 
   const result = await wrapper(
     graphql(`
@@ -55,13 +55,13 @@ exports.createPages = async ({ graphql, actions }) => {
         }
       }
     `)
-  )
+  );
 
-  const posts = result.data.allMdx.edges
+  const posts = result.data.allMdx.edges;
 
   posts.forEach((edge, index) => {
-    const next = index === 0 ? null : posts[index - 1].node
-    const prev = index === posts.length - 1 ? null : posts[index + 1].node
+    const next = index === 0 ? null : posts[index - 1].node;
+    const prev = index === posts.length - 1 ? null : posts[index + 1].node;
 
     createPage({
       path: edge.node.fields.slug,
@@ -71,20 +71,20 @@ exports.createPages = async ({ graphql, actions }) => {
         prev,
         next,
       },
-    })
-  })
+    });
+  });
 
-  const categorySet = new Set()
+  const categorySet = new Set();
 
   _.each(posts, edge => {
     if (_.get(edge, 'node.frontmatter.categories')) {
       edge.node.frontmatter.categories.forEach(cat => {
-        categorySet.add(cat)
-      })
+        categorySet.add(cat);
+      });
     }
-  })
+  });
 
-  const categories = Array.from(categorySet)
+  const categories = Array.from(categorySet);
 
   categories.forEach(category => {
     createPage({
@@ -93,6 +93,6 @@ exports.createPages = async ({ graphql, actions }) => {
       context: {
         category,
       },
-    })
-  })
-}
+    });
+  });
+};

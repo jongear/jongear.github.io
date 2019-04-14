@@ -1,4 +1,4 @@
-import { useStaticQuery, graphql } from 'gatsby'
+import { useStaticQuery, graphql } from 'gatsby';
 
 const useBuildTime = () => {
   const time = useStaticQuery(graphql`
@@ -7,9 +7,9 @@ const useBuildTime = () => {
         buildTime(formatString: "YYYY-MM-DD")
       }
     }
-  `)
+  `);
 
-  return time.site.buildTime
-}
+  return time.site.buildTime;
+};
 
-export default useBuildTime
+export default useBuildTime;

@@ -1,7 +1,6 @@
-import React from "react";
-import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'
-
-import theme from '../config/theme'
+import React from 'react';
+import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
+import theme from '../config/theme';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -43,7 +42,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  color: #FFECDB;
+  color: #ffecdb;
   min-height: 95vh;
 
   margin: 0 auto;
@@ -54,14 +53,14 @@ const Container = styled.div`
   font-family: ${props => props.theme.fontFamily.sansSerif};
   font-size: 18px;
   font-weight: 800px;
-  color: #FFECDB;
+  color: #ffecdb;
 
   @media only screen and (max-width: 640px) {
     margin: 0 auto;
     max-width: 960;
     padding: 0px;
   }
-`;  
+`;
 
 const Card = styled.div`
   display: flex;
@@ -83,16 +82,16 @@ const Card = styled.div`
 const Logo = styled.div`
   margin: 0;
 
-  & .img-circle{
+  & .img-circle {
     width: 150px;
     height: 150px;
     border-radius: 100%;
   }
-`
+`;
 
 const Welcome = styled.div`
   margin-bottom: 1.25rem;
-  
+
   font-size: 3.052rem;
   font-weight: 800;
   font-family: ${props => props.theme.fontFamily.serif};
@@ -109,22 +108,22 @@ const Tagline = styled.div`
 `;
 
 const Links = styled.ul`
-  & li{
+  & li {
     display: inline-block;
     border: 1px solid rgba(244, 244, 244, 0.8);
     border-radius: 10px;
 
     margin: 5px;
 
-    &:hover{
-      box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.3);
-      background: #FF6912;
+    &:hover {
+      box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
+      background: #ff6912;
     }
 
     a {
       display: inline-block;
       padding: 0.5rem 0.75rem;
-      color: #FFECDB;
+      color: #ffecdb;
       text-decoration: none;
     }
   }
@@ -135,13 +134,13 @@ export default class IndexPage3 extends React.Component {
     super(props);
     this.state = {
       timeout: false,
-      loading: "is-loading"
+      loading: 'is-loading',
     };
   }
 
   componentDidMount() {
     this.timeoutId = setTimeout(() => {
-      this.setState({ loading: "" });
+      this.setState({ loading: '' });
     }, 100);
   }
 
@@ -159,7 +158,10 @@ export default class IndexPage3 extends React.Component {
           <Container>
             <Card>
               <Logo>
-                <img className='img-circle' src="https://pbs.twimg.com/profile_images/971760039328436224/UvVuvduk_400x400.jpg" />
+                <img
+                  className="img-circle"
+                  src="https://pbs.twimg.com/profile_images/971760039328436224/UvVuvduk_400x400.jpg"
+                />
               </Logo>
               <Welcome>Hello, I'm Jon</Welcome>
               <Tagline>I like turtles</Tagline>
@@ -168,10 +170,7 @@ export default class IndexPage3 extends React.Component {
                   <a href="/blog">Blog</a>
                 </li>
                 <li>
-                  <a
-                    href="https://twitter.com/geareduptech"
-                    target="_blank"
-                  >
+                  <a href="https://twitter.com/geareduptech" target="_blank">
                     Twitter
                   </a>
                 </li>
