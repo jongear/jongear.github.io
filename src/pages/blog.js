@@ -69,7 +69,7 @@ const BlogPage = ({
         </Link>
       </Hero>
       <Content>
-        <SectionTitle>Latest stories</SectionTitle>
+        <SectionTitle>Latest Posts</SectionTitle>
         {postEdges.map(post => (
           <Article
             title={post.node.frontmatter.title}

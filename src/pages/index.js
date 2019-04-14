@@ -108,6 +108,7 @@ const Tagline = styled.div`
 `;
 
 const Links = styled.ul`
+  padding-left: 0px;
   & li {
     display: inline-block;
     border: 1px solid rgba(244, 244, 244, 0.8);
@@ -126,6 +127,10 @@ const Links = styled.ul`
       color: #ffecdb;
       text-decoration: none;
     }
+  }
+
+  @media only screen and (max-width: 640px) {
+    padding-left: 40px;
   }
 `;
 
