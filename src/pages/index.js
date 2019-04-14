@@ -81,7 +81,7 @@ const Card = styled.div`
 
 const Logo = styled.div`
   margin: 0;
-
+  padding-bottom: 10px;
   & .img-circle {
     width: 150px;
     height: 150px;
@@ -164,7 +164,10 @@ export default class IndexPage3 extends React.Component {
                 />
               </Logo>
               <Welcome>Hello, I'm Jon</Welcome>
-              <Tagline>I like turtles</Tagline>
+              <Tagline>
+                I have a passion for distributed systems, machine learning and
+                brain-computer interfaces.
+              </Tagline>
               <Links>
                 <li>
                   <a href="/blog">Blog</a>
