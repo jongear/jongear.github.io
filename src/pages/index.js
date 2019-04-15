@@ -78,6 +78,8 @@ const Card = styled.div`
   border: 1px solid rgba(244, 244, 244, 0);
   border-radius: 3px;
   box-shadow: 0px 5px 10px 1px #aaaaaa;
+
+  height: 100%;
 `;
 
 const Logo = styled.div`
@@ -98,13 +100,16 @@ const Welcome = styled.div`
 `;
 
 const Tagline = styled.div`
-  min-width: 80%;
   text-align: center;
   border-top: 1px solid rgba(244, 244, 244, 0.8);
   border-bottom: 1px solid rgba(244, 244, 244, 0.8);
 
   margin-bottom: 1.25rem;
   padding: 0.75rem 0px;
+
+  @media only screen and (max-width: 440px) {
+    padding-left: 2rem;
+  }
 `;
 
 const Links = styled.ul`
