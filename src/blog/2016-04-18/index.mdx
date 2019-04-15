@@ -1,0 +1,111 @@
+---
+date: '2016-04-17'
+title: 'Autocomplete with AWS CloudSearch'
+categories:
+  - Cloudsearch
+  - AWS
+---
+
+In this post we will discuss supporting Autocomplete with AWS CloudSearch. CloudSearch
+is a full featured search engine that allows AWS users a performant way to query NoSQL
+solutions via index columns. Read the following article if you would like to learn how to
+port DynamoDB data to CloudSearch to follow along. Getting Started Searching DynamoDB Data
+with Amazon CloudSearch
+
+CloudSearch is a natural searching choice in the AWS world due to it’s ease of integration
+with DynamoDB. In any searching solution there are a few common scenarios that users need to handle.
+
+1. Autocomplete searching
+2. Full text searching
+3. Faceted searching
+
+Today we will be focusing on the first scenario. We have a website that allows users to search
+movies their favorite actors have starred in. This system will provide text autocomplete as users
+spell out the name of their favorite actor.
+
+Consider the following list.
+
+| first_name | last_name | user_name  |
+| ---------- | --------- | ---------- |
+| Jess       | Harnell   | Bingo4     |
+| Jessie     | Ventura   | Orange7    |
+| Jessica    | Biel      | Dachshund5 |
+| Jesús      | Ochoa     | Apple3     |
+| Tom        | Hardy     | Jester1    |
+| Christine  | Jeston    | Carrot9    |
+
+If our user types “jes” into our autocomplete search box to lookup their favorite actor by name they
+expect to get back an autocomplete list of all actors that have “jes” contained somewhere within their
+name. They do not expect to find Tom Hardy as his name does not contain a “jes” even though it is
+part of his username.
+
+```html
+search?q=jes
+```
+
+The default query does phrase matching. Because of this we cannot approach solving autocomplete by using
+the default syntax . The default query will return **0 results**, as none of our users have a single phrase
+of “jes” contained in their user data. However, all of our desired users have “jes” as the prefix in a
+desired column. We can use the \* wildcard character to specify any result that is prefixed by our desired search phrase.
+
+```html
+search?q=jes*
+```
+
+This seems to work on the surface, however, we are now receiving all results including Tom Hardy
+(since his username contains jes as a prefix). To resolve this we need to limit the scope of our
+prefix search to the first and last name fields only. This can be done by utilizing a structured query. For more information
+on structured queries, [click here.](https://docs.aws.amazon.com/cloudsearch/latest/developerguide/searching-compound-queries.html)
+
+```html
+search?q=(or (prefix field%3Dfirst_name 'jes') (prefix field%3Dlast_name 'jes'))
+&q.parser=structured
+```
+
+_Note: In queries the = sign must be HTML encoded as %3D_
+_Note: I have broken this request onto 4 separate lines to limit horizontal scrolling. It is one HTTP GET request_
+
+This request will get all users with a prefix of “jes” but what happens if we add another “s” so that we are now searching for
+“jess”? Well, since our user Jess Harnell does not have any continuing characters in their first name they will fail the
+CloudSearch requirement and will not be returned. For this reason we will need to support searching for phrases
+(as we did in our first example) as well as prefixes.
+
+```html
+search?q=(or (or (prefix field%3Dfirst_name 'jes') (phrase field%3Dfirst_name
+'jes')) (or (prefix field%3Dlast_name 'jes') (phrase field%3Dlast_name 'jes')))
+&q.parser=structured
+```
+
+The phrase syntax can be shorthanded to the following however I prefer the more explicit declaration
+
+```html
+search?q=(or (or (prefix field%3Dfirst_name 'jes') (or first_name: 'jes')) (or
+(prefix field%3Dlast_name 'jes') (or last_name: 'jes'))) &q.parser=structured
+```
+
+By default, CloudSearch will return the top 10 results, which may be a little much for an autocomplete feature.
+I personally prefer to show the top 5. This can be specified through the size parameter
+
+```
+search?q=(or
+(or (prefix field%3Dfirst_name 'jes')
+(or first_name: 'jes'))
+(or (prefix field%3Dlast_name 'jes')
+(or last_name: 'jes')))
+&q.parser=structured
+&size=5
+```
+
+Now we are able to get a smaller result set which will help to declutter the UI as the user continues typing to
+narrow their search. If we do not provide a sort index or any scoring rules CloudSearch will attempt to score our
+results for us. Which will rank results with phrase hits higher than prefix hits. If we decide we prefer our results
+to be alphabetical regards of scoring, we can choose to apply a sort and a sort direction.
+
+```html
+search?q=(or (or (prefix field%3Dfirst_name 'jes') (or first_name: 'jes')) (or
+(prefix field%3Dlast_name 'jes') (or last_name: 'jes'))) &q.parser=structured
+&size=5 &sort=first_name asc
+```
+
+And that concludes this walkthrough on AWS CloudSearch as an autocomplete solution. For more information about the Search API,
+[https://docs.aws.amazon.com/cloudsearch/latest/developerguide/search-api.html](click here.)
