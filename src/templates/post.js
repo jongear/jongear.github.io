@@ -58,10 +58,10 @@ const DisqusContainer = styled.div`
 const Post = ({
   pageContext: { slug, prev, next },
   data: { mdx: postNode, site },
+  location,
 }) => {
   const post = postNode.frontmatter;
 
-  // Disqus
   const disqus = {
     shortname: config.disqusShortName,
     url: `${site.siteMetadata.siteUrl}${location.pathname}`,
@@ -93,13 +93,7 @@ const Post = ({
           </PostContent>
           <PrevNext prev={prev} next={next} />
           <DisqusContainer>
-            <ReactDisqusComments
-              shortname={disqus.shortname}
-              identifier={disqus.identifier}
-              url={disqus.url}
-              title={disqus.title}
-              language={disqus.language}
-            />
+            <ReactDisqusComments {...disqus} />
           </DisqusContainer>
         </Content>
       </Wrapper>
@@ -114,10 +108,11 @@ Post.propTypes = {
     slug: PropTypes.string.isRequired,
     next: PropTypes.object,
     prev: PropTypes.object,
-  }),
+  }).isRequired,
   data: PropTypes.shape({
     mdx: PropTypes.object.isRequired,
   }).isRequired,
+  location: PropTypes.object.isRequired,
 };
 
 Post.defaultProps = {
