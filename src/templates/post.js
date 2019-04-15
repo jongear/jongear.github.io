@@ -4,9 +4,10 @@ import { Link, graphql } from 'gatsby';
 import styled from 'styled-components';
 import kebabCase from 'lodash/kebabCase';
 import MDXRenderer from 'gatsby-mdx/mdx-renderer';
+import ReactDisqusComments from 'react-disqus-comments';
 
 import { Layout, Wrapper, Header, Subline, SEO, PrevNext } from '../components';
-import config from '../config';
+import config from '../config/website';
 
 const Content = styled.article`
   grid-column: 2;
@@ -50,11 +51,24 @@ const PostContent = styled.div`
   margin-top: 4rem;
 `;
 
+const DisqusContainer = styled.div`
+  margin-top: 2rem;
+`;
+
 const Post = ({
   pageContext: { slug, prev, next },
-  data: { mdx: postNode },
+  data: { mdx: postNode, site },
 }) => {
   const post = postNode.frontmatter;
+
+  // Disqus
+  const disqus = {
+    shortname: config.disqusShortName,
+    url: `${site.siteMetadata.siteUrl}${location.pathname}`,
+    identifier: location.pathname,
+    title: post.title.text,
+    language: 'en',
+  };
 
   return (
     <Layout customSEO>
@@ -78,6 +92,15 @@ const Post = ({
             <MDXRenderer>{postNode.code.body}</MDXRenderer>
           </PostContent>
           <PrevNext prev={prev} next={next} />
+          <DisqusContainer>
+            <ReactDisqusComments
+              shortname={disqus.shortname}
+              identifier={disqus.identifier}
+              url={disqus.url}
+              title={disqus.title}
+              language={disqus.language}
+            />
+          </DisqusContainer>
         </Content>
       </Wrapper>
     </Layout>
@@ -106,6 +129,11 @@ Post.defaultProps = {
 
 export const postQuery = graphql`
   query postBySlug($slug: String!) {
+    site {
+      siteMetadata {
+        siteUrl
+      }
+    }
     mdx(fields: { slug: { eq: $slug } }) {
       code {
         body
