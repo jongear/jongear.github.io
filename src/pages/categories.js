@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import kebabCase from 'lodash/kebabCase';
 
 import { Layout, Wrapper, Header, SectionTitle } from '../components';
-import config from '../config';
+import config from '../config/website';
 
 const Content = styled.div`
   grid-column: 2;

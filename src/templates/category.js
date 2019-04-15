@@ -12,7 +12,7 @@ import {
   Article,
   SectionTitle,
 } from '../components';
-import config from '../config';
+import config from '../config/website';
 
 const Content = styled.div`
   grid-column: 2;

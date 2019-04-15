@@ -6,7 +6,7 @@ import { Link } from 'gatsby';
 import styled from 'styled-components';
 import { Layout, Wrapper, Header } from '../components';
 
-import config from '../config';
+import config from '../config/website';
 
 const Content = styled.div`
   grid-column: 2;

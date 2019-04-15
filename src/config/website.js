@@ -23,4 +23,6 @@ module.exports = {
   // See: https://developers.google.com/web/fundamentals/web-app-manifest/
   themeColor: '#75A7C6',
   backgroundColor: '#1C2426',
+
+  disqusShortName: 'gear-dev',
 };
