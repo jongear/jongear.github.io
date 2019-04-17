@@ -2,6 +2,8 @@ import React from 'react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import theme from '../config/theme';
 import logo from '../images/logo.svg';
+import { SEO } from '../components';
+import useBuildTime from '../hooks/useBuildTime';
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -139,67 +141,49 @@ const Links = styled.ul`
   }
 `;
 
-export default class IndexPage3 extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      timeout: false,
-      loading: 'is-loading',
-    };
-  }
+const IndexPage = () => {
+  const buildTime = useBuildTime();
+  return (
+    <ThemeProvider theme={theme}>
+      <>
+        <SEO buildTime={buildTime} />
+        <GlobalStyle />
+        <Container>
+          <Card>
+            <Logo>
+              <img className="img-circle" src={logo} />
+            </Logo>
+            <Welcome>Hello, I'm Jon</Welcome>
+            <Tagline>
+              I have a passion for distributed systems, machine learning and
+              brain-computer interfaces.
+            </Tagline>
+            <Links>
+              <li>
+                <a href="/blog">Blog</a>
+              </li>
+              <li>
+                <a href="https://twitter.com/geareduptech" target="_blank">
+                  Twitter
+                </a>
+              </li>
+              <li>
+                <a href="https://github.com/jongear" target="_blank">
+                  GitHub
+                </a>
+              </li>
+              <li>
+                <a href="/resume">Resume</a>
+              </li>
+              <li>
+                <a href="/contact">Contact</a>
+              </li>
+            </Links>
+          </Card>
+        </Container>
+      </>
+    </ThemeProvider>
+  );
+};
 
-  componentDidMount() {
-    this.timeoutId = setTimeout(() => {
-      this.setState({ loading: '' });
-    }, 100);
-  }
-
-  componentWillUnmount() {
-    if (this.timeoutId) {
-      clearTimeout(this.timeoutId);
-    }
-  }
-
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <>
-          <GlobalStyle />
-          <Container>
-            <Card>
-              <Logo>
-                <img className="img-circle" src={logo} />
-              </Logo>
-              <Welcome>Hello, I'm Jon</Welcome>
-              <Tagline>
-                I have a passion for distributed systems, machine learning and
-                brain-computer interfaces.
-              </Tagline>
-              <Links>
-                <li>
-                  <a href="/blog">Blog</a>
-                </li>
-                <li>
-                  <a href="https://twitter.com/geareduptech" target="_blank">
-                    Twitter
-                  </a>
-                </li>
-                <li>
-                  <a href="https://github.com/jongear" target="_blank">
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a href="/resume">Resume</a>
-                </li>
-                <li>
-                  <a href="/contact">Contact</a>
-                </li>
-              </Links>
-            </Card>
-          </Container>
-        </>
-      </ThemeProvider>
-    );
-  }
-}
+export default IndexPage;
