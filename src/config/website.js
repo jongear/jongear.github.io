@@ -7,7 +7,7 @@ module.exports = {
   siteUrl: 'https://gear.dev', // Domain of your site. No trailing slash!
   siteLanguage: 'en', // Language Tag on <html> element
   siteHeadline: 'Jon Gear', // Headline for schema.org JSONLD
-  siteBanner: '/social/banner.svg',
+  siteBanner: '/social/banner.png',
   favicon: 'src/images/logo.svg', // Your image for favicons. You can find it in the /src folder
   siteDescription: "Jon Gear's personal website and blog", // Your site description
   author: 'Jon Gear', // Author for schemaORGJSONLD
