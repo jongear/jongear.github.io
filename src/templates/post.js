@@ -71,7 +71,7 @@ const Post = ({
   };
 
   return (
-    <Layout customSEO>
+    <Layout>
       <Wrapper>
         <SEO postPath={slug} postNode={postNode} article />
         <Header>
