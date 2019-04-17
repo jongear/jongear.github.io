@@ -7,11 +7,11 @@ module.exports = {
   siteUrl: 'https://gear.dev', // Domain of your site. No trailing slash!
   siteLanguage: 'en', // Language Tag on <html> element
   siteHeadline: 'Jon Gear', // Headline for schema.org JSONLD
-  siteBanner: 'src/images/logo.svg', // Your image for og:image tag. You can find it in the /static folder
+  siteBanner: '/social/banner.svg',
   favicon: 'src/images/logo.svg', // Your image for favicons. You can find it in the /src folder
   siteDescription: "Jon Gear's personal website and blog", // Your site description
   author: 'Jon Gear', // Author for schemaORGJSONLD
-  siteLogo: 'src/images/logo.svg', // Image for schemaORGJSONLD
+  siteLogo: '/social/logo.png', // Image for schemaORGJSONLD
 
   // siteFBAppID: '123456789', // Facebook App ID - Optional
   userTwitter: '@GearedUpTech', // Twitter Username - Optional
