@@ -194,13 +194,13 @@ const Footer = styled.footer`
   }
 `;
 
-const Layout = ({ children, customSEO }) => {
+const Layout = ({ children }) => {
   const buildTime = useBuildTime();
 
   return (
     <ThemeProvider theme={theme}>
       <>
-        {!customSEO && <SEO buildTime={buildTime} />}
+        <SEO buildTime={buildTime} />
         <GlobalStyle />
         {children}
         <Footer>
@@ -221,9 +221,4 @@ export default Layout;
 
 Layout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.node]).isRequired,
-  customSEO: PropTypes.bool,
-};
-
-Layout.defaultProps = {
-  customSEO: false,
 };
