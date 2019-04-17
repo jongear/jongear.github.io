@@ -2,11 +2,11 @@ module.exports = {
   pathPrefix: '/', // Prefix for all links. If you deploy your site to example.com/portfolio your pathPrefix should be "portfolio"
 
   siteTitle: 'Jon Gear', // Navigation and Site Title
-  siteTitleAlt: 'Jon Gear - Personal Site', // Alternative Site title for SEO
+  siteTitleAlt: 'Jon Gear', // Alternative Site title for SEO
   siteTitleManifest: 'Jon Gear',
   siteUrl: 'https://gear.dev', // Domain of your site. No trailing slash!
   siteLanguage: 'en', // Language Tag on <html> element
-  siteHeadline: "Jon Gear's Site", // Headline for schema.org JSONLD
+  siteHeadline: 'Jon Gear', // Headline for schema.org JSONLD
   siteBanner: 'src/images/logo.svg', // Your image for og:image tag. You can find it in the /static folder
   favicon: 'src/images/logo.svg', // Your image for favicons. You can find it in the /src folder
   siteDescription: "Jon Gear's personal website and blog", // Your site description
