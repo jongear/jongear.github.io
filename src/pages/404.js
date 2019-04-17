@@ -169,9 +169,9 @@ const NotFoundPage = () => {
                   GitHub
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="/resume">Resume</a>
-              </li>
+              </li> */}
               <li>
                 <a href="/contact">Contact</a>
               </li>
