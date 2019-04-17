@@ -15,10 +15,12 @@ const SEO = props => {
   const URL = `${homeURL}${postPath || ''}`;
   const image = `${homeURL}${config.siteBanner}`;
 
+  let publishedDate = buildTime;
   if (article) {
     const postMeta = postNode.frontmatter;
     title = `${postMeta.title} | ${config.siteTitle}`;
     description = postNode.excerpt;
+    publishedDate = postNode.frontmatter.date;
   } else {
     title = config.siteTitleAlt;
     description = config.siteDescription;
@@ -45,7 +47,7 @@ const SEO = props => {
       '@type': 'Person',
       name: config.author,
     },
-    copyrightYear: '2018',
+    copyrightYear: new Date().getFullYear(),
     creator: {
       '@type': 'Person',
       name: config.author,
@@ -54,7 +56,7 @@ const SEO = props => {
       '@type': 'Person',
       name: config.author,
     },
-    datePublished: '2019-01-07T10:30:00+01:00',
+    datePublished: publishedDate,
     dateModified: buildTime,
     image: {
       '@type': 'ImageObject',
@@ -76,10 +78,18 @@ const SEO = props => {
     {
       '@type': 'ListItem',
       item: {
+        '@id': `${homeURL}/blog`,
+        name: 'Blog',
+      },
+      position: 2,
+    },
+    {
+      '@type': 'ListItem',
+      item: {
         '@id': `${homeURL}/contact`,
         name: 'Contact',
       },
-      position: 2,
+      position: 3,
     },
   ];
 
@@ -148,7 +158,6 @@ const SEO = props => {
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="image" content={image} />
-      <meta name="gatsby-starter" content="Gatsby Starter Minimal Blog" />
       <meta property="og:locale" content={config.ogLanguage} />
       <meta
         property="og:site_name"
