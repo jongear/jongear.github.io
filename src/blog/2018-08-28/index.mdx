@@ -1,6 +1,7 @@
 ---
 date: '2018-08-28'
-title: 'Javascript returns undefined if curly brace is on next line'
+title: 'JavaScript returns undefined if curly brace is on next line'
+slug: 'javascript-returns-undefined-if-no-curly-brace'
 categories:
   - JavaScript
 ---
@@ -40,15 +41,14 @@ render(
 ```
 
 This behavior trips up a lot of developers coming from languages
-where the standard is to add the opening object brace on a 
-fresh new lone. So remember, next time you are seeing a strange undefined error on a 
-return of an object initialization, check to make sure that the brace starts on 
-the same line as the return statement. A way to always avoid this issue  entirely is to 
-not return anonymous objects directly in your functions. Assigning an 
+where the standard is to add the opening object brace on a
+fresh new lone. So remember, next time you are seeing a strange undefined error on a
+return of an object initialization, check to make sure that the brace starts on
+the same line as the return statement. A way to always avoid this issue entirely is to
+not return anonymous objects directly in your functions. Assigning an
 anonymous object to a variable ahead of time will save you a lot of pain down the road.
 
-.e.g - 
-
+.e.g -
 
 ```js react-live
 const returnHelloWorld = () => {

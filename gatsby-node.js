@@ -15,13 +15,13 @@ exports.onCreateNode = ({ node, actions }) => {
   let slug;
 
   if (node.internal.type === 'Mdx') {
+    console.log(JSON.stringify(node.frontmatter));
     if (
       Object.prototype.hasOwnProperty.call(node, 'frontmatter') &&
       Object.prototype.hasOwnProperty.call(node.frontmatter, 'slug')
     ) {
       slug = `/${_.kebabCase(node.frontmatter.slug)}`;
-    }
-    if (
+    } else if (
       Object.prototype.hasOwnProperty.call(node, 'frontmatter') &&
       Object.prototype.hasOwnProperty.call(node.frontmatter, 'title')
     ) {
