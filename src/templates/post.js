@@ -133,7 +133,7 @@ export const postQuery = graphql`
       code {
         body
       }
-      excerpt
+      excerpt(pruneLength: 300)
       frontmatter {
         title
         date(formatString: "MM/DD/YYYY")
