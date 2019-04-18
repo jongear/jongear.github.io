@@ -109,7 +109,7 @@ export const BlogQuery = graphql`
             date(formatString: "MM/DD/YYYY")
             categories
           }
-          excerpt(pruneLength: 200)
+          excerpt(pruneLength: 300)
           timeToRead
         }
       }
