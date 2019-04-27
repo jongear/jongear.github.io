@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'gatsby';
 import styled from 'styled-components';
 import { Layout, Wrapper, Header, Button } from '../components';
-
+import logo from '../images/logo.svg';
 import config from '../config/website';
 
 const Content = styled.div`
@@ -47,7 +47,10 @@ const Contact = () => (
     <Wrapper>
       <Helmet title={`Contact | ${config.siteTitle}`} />
       <Header>
-        <Link to="/">{config.siteTitle}</Link>
+        <Link to="/">
+          <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
+          {config.siteTitle}
+        </Link>
       </Header>
       <Content>
         <h1>Contact</h1>
