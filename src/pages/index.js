@@ -60,8 +60,18 @@ const Container = styled.div`
 
   @media only screen and (max-width: 640px) {
     margin: 0 auto;
-    max-width: 960;
+    max-width: 640px;
+    display: block;
     padding: 0px;
+    height: 100vh;
+  }
+
+  @media only screen and (max-width: 400px) {
+    margin: 0 auto;
+    max-width: 400px;
+    display: block;
+    padding: 0px;
+    height: 100vh;
   }
 `;
 
@@ -82,6 +92,12 @@ const Card = styled.div`
   box-shadow: 0px 5px 10px 1px #aaaaaa;
 
   height: 100%;
+
+  @media only screen and (max-width: 400px) {
+    min-width: 300px;
+    max-width: 400px;
+    margin: 0 auto;
+  }
 `;
 
 const Logo = styled.div`
@@ -91,14 +107,26 @@ const Logo = styled.div`
     width: 150px;
     height: 150px;
   }
+
+  @media only screen and (max-width: 440px) {
+    & .img-circle {
+      width: 100px;
+      height: 100px;
+    }
+  }
 `;
 
 const Welcome = styled.div`
   margin-bottom: 1.25rem;
 
-  font-size: 3.052rem;
+  font-size: 3rem;
   font-weight: 800;
   font-family: ${props => props.theme.fontFamily.serif};
+
+  @media only screen and (max-width: 400px) {
+    font-size: 2rem;
+    width: 220px;
+  }
 `;
 
 const Tagline = styled.div`
@@ -137,7 +165,7 @@ const Links = styled.ul`
   }
 
   @media only screen and (max-width: 640px) {
-    padding-left: 40px;
+    text-align: center;
   }
 `;
 
