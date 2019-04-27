@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link, graphql } from 'gatsby';
 import styled from 'styled-components';
-
+import logo from '../images/logo.svg';
 import {
   Layout,
   Wrapper,
@@ -41,7 +41,10 @@ const Category = ({ pageContext: { category }, data: { allMdx } }) => {
       <Wrapper>
         <Helmet title={`Category: ${category} | ${config.siteTitle}`} />
         <Header>
-          <Link to="/">{config.siteTitle}</Link>
+          <Link to="/blog">
+            <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
+            {config.blogTitle}
+          </Link>
         </Header>
         <Content>
           <SectionTitle>Category &ndash; {category}</SectionTitle>

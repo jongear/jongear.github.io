@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import kebabCase from 'lodash/kebabCase';
 import MDXRenderer from 'gatsby-mdx/mdx-renderer';
 import ReactDisqusComments from 'react-disqus-comments';
-
+import logo from '../images/logo.svg';
 import { Layout, Wrapper, Header, Subline, SEO, PrevNext } from '../components';
 import config from '../config/website';
 
@@ -75,7 +75,10 @@ const Post = ({
       <Wrapper>
         <SEO postPath={slug} postNode={postNode} article />
         <Header>
-          <Link to="/">{config.siteTitle}</Link>
+          <Link to="/blog">
+            <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
+            {config.blogTitle}
+          </Link>
         </Header>
         <Content>
           <Title>{post.title}</Title>

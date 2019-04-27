@@ -3,6 +3,7 @@ module.exports = {
 
   siteTitle: 'Jon Gear', // Navigation and Site Title
   siteTitleAlt: 'Jon Gear', // Alternative Site title for SEO
+  blogTitle: "Jon Gear's Blog",
   siteTitleManifest: 'Jon Gear',
   siteUrl: 'https://gear.dev', // Domain of your site. No trailing slash!
   siteLanguage: 'en', // Language Tag on <html> element
