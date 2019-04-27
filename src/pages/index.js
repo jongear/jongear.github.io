@@ -45,7 +45,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  color: #ffecdb;
+  color: ${props => props.theme.colors.primaryFontColor};
   min-height: 95vh;
 
   margin: 0 auto;
@@ -56,7 +56,7 @@ const Container = styled.div`
   font-family: ${props => props.theme.fontFamily.sansSerif};
   font-size: 18px;
   font-weight: 800px;
-  color: #ffecdb;
+  color: ${props => props.theme.colors.primaryFontColor};
 
   @media only screen and (max-width: 640px) {
     margin: 0 auto;
@@ -159,7 +159,7 @@ const Links = styled.ul`
     a {
       display: inline-block;
       padding: 0.5rem 0.75rem;
-      color: #ffecdb;
+      color: ${props => props.theme.colors.primaryFontColor};
       text-decoration: none;
     }
   }
