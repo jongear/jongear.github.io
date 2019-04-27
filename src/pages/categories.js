@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 import { Link, graphql } from 'gatsby';
 import styled from 'styled-components';
 import kebabCase from 'lodash/kebabCase';
-
+import logo from '../images/logo.svg';
 import { Layout, Wrapper, Header, SectionTitle } from '../components';
 import config from '../config/website';
 
@@ -39,7 +39,10 @@ const Category = ({
     <Wrapper>
       <Helmet title={`Categories | ${config.siteTitle}`} />
       <Header>
-        <Link to="/">{config.siteTitle}</Link>
+        <Link to="/blog">
+          <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
+          {config.blogTitle}
+        </Link>
       </Header>
       <Content>
         <SectionTitle>Categories</SectionTitle>
