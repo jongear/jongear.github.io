@@ -86,13 +86,9 @@ search?q=(or (or (prefix field%3Dfirst_name 'jes') (or first_name: 'jes')) (or
 By default, CloudSearch will return the top 10 results, which may be a little much for an autocomplete feature.
 I personally prefer to show the top 5. This can be specified through the size parameter
 
-```
-search?q=(or
-(or (prefix field%3Dfirst_name 'jes')
-(or first_name: 'jes'))
-(or (prefix field%3Dlast_name 'jes')
-(or last_name: 'jes')))
-&q.parser=structured
+```html
+search?q=(or (or (prefix field%3Dfirst_name 'jes') (or first_name: 'jes')) (or
+(prefix field%3Dlast_name 'jes') (or last_name: 'jes'))) &q.parser=structured
 &size=5
 ```
 
