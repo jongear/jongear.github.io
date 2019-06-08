@@ -104,7 +104,7 @@ Next up is our flight mechanic. This is a tricky one. Our headset offers two alg
 I tried to get both working to allow for a 4-directional flight off of 2 axises but I ended up going back to a single axis flight model due to how difficult
 it is to try and fip between meidtation and attention with any level of control.
 
-For my demo I chose to isolation the Meditation metric since I'm naturally better at controling this metric than the Attention one but the code for either is
+For my demo I chose to isolate the Meditation metric since I'm naturally better at controlling this metric than the Attention one but the code for either is
 interchangeable
 
 ```js
@@ -133,6 +133,14 @@ this.client.on('data', function(data) {
   }
 });
 ```
+
+For the purposes of the demo I decided that any reading below 50% since more than likely this is a strong tell that our pilot isn't actively trying to
+control the drone. Above 50% we have a two directional steering system. If our pilot meditates from 50-75% the drone will turn right. And 75-100% will cause
+the drone to turn left.
+
+Ok perfect, so now we can takeoff, land and turn our drone right or left. But what if we want to go forward and backwards as well as pilot our craft in
+a more controlled way? Well that's where our Mindwave Headset reaches the end of its capabilities. To accomplish this, we are going to need a headset with
+more firepower.
 
 ## OpenBCI Ultracortex Demo
 
@@ -172,12 +180,10 @@ this.client.on('data', function(data) {
   <img src={fullDemo} alt="All demo devices" style={{ height: '500px' }} />
 </div>
 
-(
-  <div style="text-align:center">
-    <img
-      src={thotconOpenBciSetup}
-      alt="THOTCON: Demo of drone flight using OpenBCI Ultracortex EEG Headset"
-      style={{ height: '300px' }}
-    />
-  </div>
-)````
+<div style="text-align:center">
+  <img
+    src={thotconOpenBciSetup}
+    alt="THOTCON: Demo of drone flight using OpenBCI Ultracortex EEG Headset"
+    style={{ height: '300px' }}
+  />
+</div>
