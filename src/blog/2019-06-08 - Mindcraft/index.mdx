@@ -1,0 +1,183 @@
+---
+date: '2019-06-08'
+title: 'Building a mind-controlled drone'
+categories:
+  - Hacking
+---
+
+import mindwaveDrone from './assets/mindwave-drone.jpg';
+import mindwaveTutorial from './assets/mindwave-tutorial.png';
+
+import thotconMindwave from './assets/thotcon-mindwave.png';
+import mindwaveFlight from './assets/mindwave-flight.gif';
+
+import unboxingOpenBciGif from './assets/openbci-unboxing.gif';
+
+import fullDemo from './assets/full-demo.jpg';
+
+import backOfOpenBci from './assets/back-of-openbci.jpg';
+import beginningOpenBci from './assets/openbci-beginning.jpg';
+import completedOpenBci from './assets/openbci-completed.jpg';
+import thotconOpenBciSetup from './assets/thotcon-openbci-setup.gif';
+
+_All of the code that will be discussed in this post can be found in my GitHub repo [github/jongear/mindcraft](https://github.com/jongear/mindcraft)_
+
+A little over a year ago I stumbled across a demo by [Alex Castillo](https://twitter.com/castillo__io) showcasing how you can control a retail drone with your mind.
+To say I was inspired is an understatement. I immediately DMed Alex and asked him what hardward he leveraged for his demo. Alex graciously shared his hardware
+recommendations along with a few pointers.
+
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    Mind-controlling a Drone with JavaScript is eaiser than it sounds.{' '}
+    <a href="https://t.co/8XxXgxla5m">pic.twitter.com/8XxXgxla5m</a>
+  </p>
+  &mdash; Alex Castillo (@castillo__io) <a href="https://twitter.com/castillo__io/status/986236309139345408?ref_src=twsrc%5Etfw">April 17, 2018</a>
+</blockquote>
+
+## NeuroSky Mindwave Demo
+
+<div style="text-align:center">
+  <img
+    src={mindwaveDrone}
+    alt="OpenBCI Ultracortex EEG Headset from the back"
+    style={{ height: '500px' }}
+  />
+</div>
+
+Based off Alex's [recommendations](https://twitter.com/castillo__io/status/986237828169216000) I purchased a NeuroSky headset and a similar Parrot Mambo
+minidrone to the one he used. You can find my exact shopping list with product links [here](https://github.com/jongear/mindcraft#neurosky). Total investment
+is roughly \$200 for both products. After a week I was able to hack together a demo that allowed for liftoff and some very rudimentary steering control.
+
+<blockquote class="twitter-tweet" data-lang="en">
+  <p lang="en" dir="ltr">
+    I built a mind control setup for my drone! 🤓 👾
+    <a href="https://t.co/D1HI8d86dW">pic.twitter.com/D1HI8d86dW</a>
+  </p>
+  &mdash; Jon Gear (@GearedUpTech) <a href="https://twitter.com/GearedUpTech/status/1020162298164465664?ref_src=twsrc%5Etfw">July 20, 2018</a>
+</blockquote>
+
+Cool right? So what is actually going on here? To understand that, we need to dive a little deeper into what the MindWave headset's capabilities are.
+
+<div style="text-align:center">
+  <img
+    src={mindwaveTutorial}
+    alt="Showing the NeuroSky Mindwave Tutorial UI which tests blink, meditation and attention"
+  />
+</div>
+
+NeuroSky Mindwave headsets are a single channel EEG headset. Which means they have a single contact point to take EEG measurements with. Which is ideal for
+measuing large EEG artifacts such as a blink as well as measuring meditation and attention. In my demo I mentioned that I use a hard blink to control
+takeoff and landing.
+
+```js
+this.client = thinkgear.createClient();
+this.client.on('blink_data', function(data) {
+  console.log(data);
+
+  if (data.blinkStrength > 200) {
+    if (droneFlying) {
+      drone.land().then(function() {
+        droneFlying = false;
+        log('did land!');
+      });
+    } else {
+      drone.takeoff().then(function() {
+        droneFlying = true;
+        log('did take off!');
+      });
+    }
+  }
+});
+```
+
+By using the blink readings we now have the ability to decide when to start our flight and when to end it. I purposefully picked blinks as my takeoff option
+as it's a more natural starting point. It also allows people to try the demo without fear of accidentally sending the drone into flight.
+
+<div style="text-align:center">
+  <img
+    src={mindwaveTutorial}
+    alt="Showing the NeuroSky Mindwave Tutorial UI which tests blink, meditation and attention"
+  />
+</div>
+
+Next up is our flight mechanic. This is a tricky one. Our headset offers two algorithms for predicting intent in meditation and attention. For a while
+I tried to get both working to allow for a 4-directional flight off of 2 axises but I ended up going back to a single axis flight model due to how difficult
+it is to try and fip between meidtation and attention with any level of control.
+
+For my demo I chose to isolation the Meditation metric since I'm naturally better at controling this metric than the Attention one but the code for either is
+interchangeable
+
+```js
+this.client = thinkgear.createClient();
+this.client.on('data', function(data) {
+  log(data);
+
+  const meditation = data.eSense.meditation;
+  if (meditation > 50) {
+    log(`meditation: ${meditation}`);
+
+    if (meditation < 75) {
+      drone.turn({ direction: 'right', speed: 80, steps: 10 }).then(function() {
+        log('moved right!');
+      });
+    } else {
+      drone.turn({ direction: 'left', speed: 80, steps: 10 }).then(function() {
+        log('moved left!');
+      });
+    }
+  }
+
+  const attention = data.eSense.attention;
+  if (attention > 50) {
+    log(`attention: ${attention}`);
+  }
+});
+```
+
+## OpenBCI Ultracortex Demo
+
+<div style="text-align:center">
+  <img
+    src={unboxingOpenBciGif}
+    alt="Unboxing video of OpenBCI Ultracortex EEG Headset"
+    style={{ height: '500px' }}
+  />
+</div>
+
+<div style="text-align:center">
+  <img
+    src={beginningOpenBci}
+    alt="Beginning to configure OpenBCI Ultracortex EEG Headset"
+    style={{ height: '500px' }}
+  />
+</div>
+
+<div style="text-align:center">
+  <img
+    src={completedOpenBci}
+    alt="Completed OpenBCI Ultracortex EEG Headset"
+    style={{ height: '500px' }}
+  />
+</div>
+
+<div style="text-align:center">
+  <img
+    src={backOfOpenBci}
+    alt="OpenBCI Ultracortex EEG Headset from the back"
+    style={{ height: '500px' }}
+  />
+</div>
+
+<div style="text-align:center">
+  <img src={fullDemo} alt="All demo devices" style={{ height: '500px' }} />
+</div>
+
+(
+  <div style="text-align:center">
+    <img
+      src={thotconOpenBciSetup}
+      alt="THOTCON: Demo of drone flight using OpenBCI Ultracortex EEG Headset"
+      style={{ height: '300px' }}
+    />
+  </div>
+)````
