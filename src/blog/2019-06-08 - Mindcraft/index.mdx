@@ -8,6 +8,9 @@ categories:
 import mindwaveDrone from './assets/mindwave-drone.jpg';
 import mindwaveTutorial from './assets/mindwave-tutorial.png';
 
+import mindcraftSteering from './assets/mindcraft-steering.png';
+import mindcraftTraining from './assets/mindcraft-training.png';
+
 import thotconMindwave from './assets/thotcon-mindwave.png';
 import mindwaveFlight from './assets/mindwave-flight.gif';
 
@@ -33,6 +36,22 @@ recommendations along with a few pointers.
   </p>
   &mdash; Alex Castillo (@castillo__io) <a href="https://twitter.com/castillo__io/status/986236309139345408?ref_src=twsrc%5Etfw">April 17, 2018</a>
 </blockquote>
+
+## A Manual Override
+
+Before I started working on the "mind-control" portion of this project. I recognized early on that I will want to have some form of fail safe in case my
+maiden flight goes sideways causing my drone to drift towards my living room tv. Out of that need the Mindcraft Flight Control Center was born. Complete with
+basic steering as well as a Take Off/Landing feature and an Emergency panic button for good measure.
+
+<div style="text-align:center">
+  <img src={mindcraftSteering} alt="The MindCraft steering GUI" />
+  <p style="text-align: center; font-style: italic;">
+    Note: This UI was inspired by{' '}
+    <a href="https://github.com/wesbos/javascript-drones">
+      Wes Bos's JavaScript Drones Repo
+    </a>
+  </p>
+</div>
 
 ## NeuroSky Mindwave Demo
 
@@ -178,6 +197,10 @@ more firepower.
 
 <div style="text-align:center">
   <img src={fullDemo} alt="All demo devices" style={{ height: '500px' }} />
+</div>
+
+<div style="text-align:center">
+  <img src={mindcraftTraining} alt="The MindCraft training GUI" />
 </div>
 
 <div style="text-align:center">
