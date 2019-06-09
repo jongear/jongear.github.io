@@ -27,6 +27,9 @@ import motorCortex from './assets/motor-cortex.jpg';
 import electrodePlacement from './assets/electrode-placement.png';
 import motorImagery from './assets/motor-imagery.jpg';
 
+import trainingData from './assets/training-data.png';
+import tensorflowTraining from './assets/tensorflow-training.png';
+
 _All of the code that will be discussed in this post can be found in my GitHub repo [github.com/jongear/mindcraft](https://github.com/jongear/mindcraft)_
 
 A little over a year ago I stumbled across a demo by [Alex Castillo](https://twitter.com/castillo__io) showcasing how you can control a retail drone with your mind.
@@ -212,7 +215,7 @@ commonly annotate where along the subject's head each electrode should be placed
 My first question after unboxing OpenBCI's Ultracortex was, ok, where do I put all of these wires? That actually turned out to be a harder question than
 I originally expected. The short answer is, it depends. Placement of the electrode mounts is highly dependent on what EEG sampling you want to observe. OK great,
 so in order to answer that we need to figure out what part of the brain we will need to observe. After a fair amount of asking industry friends and googling I
-learned that the part of the brain I should focus on for this to be most successful is the motor cortex.
+learned that the part of the brain I should focus on for this to be most successful is the [Motor Cortex](https://en.wikipedia.org/wiki/Motor_cortex).
 
 <div style="text-align:center">
   <img
@@ -309,6 +312,34 @@ cytonBoard.autoFindOpenBCIBoard().then(portName => {
 });
 ```
 
+OpenBCI has a fantastic [Cyton SDK](https://github.com/OpenBCI/OpenBCI_NodeJS_Cyton) that retrieval of our live stream data a breeze. You can sample channel data,
+accelerometer data, timings and a host of other data points. [Checkout their GitHub for a full list of libraries and sdk support](https://github.com/OpenBCI).
+
+<div style="text-align:center">
+  <img
+    src={trainingData}
+    alt="csv with training data"
+    style={{ height: '450px' }}
+  />
+  <p style="text-align: center; font-style: italic;">
+    Sample training data. Note the first record in the column is denoted as the
+    "direction". This is the direction the pilot was thinking of when the data
+    was recorded
+  </p>
+</div>
+
+Since EEG data is inherently messy I opted for a offline training approach for teaching our system intent. I won't go deep into [Machine Learning](https://en.wikipedia.org/wiki/Machine_learning)
+in this blog post but I do want to give you a high level overview of what it takes to go from raw EEG input to decoding intent. I chose an approach known as
+[Supervised Learning](https://en.wikipedia.org/wiki/Supervised_learning) to teach out system to match EEG data to
+
+<div style="text-align:center">
+  <img
+    src={tensorflowTraining}
+    alt="Tensorflow training showing ~70% accuracy"
+    style={{ height: '450px' }}
+  />
+</div>
+
 <div style="text-align:center">
   <img src={mindcraftTraining} alt="The MindCraft training GUI" />
 </div>
@@ -319,8 +350,4 @@ cytonBoard.autoFindOpenBCIBoard().then(portName => {
     alt="THOTCON: Demo of drone flight using OpenBCI Ultracortex EEG Headset"
     style={{ height: '300px' }}
   />
-</div>
-
-<div style="text-align:center">
-  <img src={fullDemo} alt="All demo devices" style={{ height: '500px' }} />
 </div>
