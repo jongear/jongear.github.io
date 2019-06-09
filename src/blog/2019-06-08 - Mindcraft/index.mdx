@@ -23,7 +23,10 @@ import beginningOpenBci from './assets/openbci-beginning.jpg';
 import completedOpenBci from './assets/openbci-completed.jpg';
 import thotconOpenBciSetup from './assets/thotcon-openbci-setup.gif';
 
-_All of the code that will be discussed in this post can be found in my GitHub repo [github/jongear/mindcraft](https://github.com/jongear/mindcraft)_
+import motorCortex from './assets/motor-cortex.jpg';
+import electrodePlacement from './assets/electrode-placement.png';
+
+_All of the code that will be discussed in this post can be found in my GitHub repo [github.com/jongear/mindcraft](https://github.com/jongear/mindcraft)_
 
 A little over a year ago I stumbled across a demo by [Alex Castillo](https://twitter.com/castillo__io) showcasing how you can control a retail drone with your mind.
 To say I was inspired is an understatement. I immediately DMed Alex and asked him what hardward he leveraged for his demo. Alex graciously shared his hardware
@@ -39,7 +42,7 @@ recommendations along with a few pointers.
 
 ## A Manual Override
 
-Before I started working on the "mind-control" portion of this project. I recognized early on that I will want to have some form of fail safe in case my
+Before I started working on the "mind-control" portion of this project. I recognized early on that I will want to have some form of failsafe in case my
 maiden flight goes sideways causing my drone to drift towards my living room tv. Out of that need the Mindcraft Flight Control Center was born. Complete with
 basic steering as well as a Take Off/Landing feature and an Emergency panic button for good measure.
 
@@ -64,7 +67,7 @@ basic steering as well as a Take Off/Landing feature and an Emergency panic butt
 </div>
 
 Based off Alex's [recommendations](https://twitter.com/castillo__io/status/986237828169216000) I purchased a NeuroSky headset and a similar Parrot Mambo
-minidrone to the one he used. You can find my exact shopping list with product links [here](https://github.com/jongear/mindcraft#neurosky). Total investment
+minidrone to the one he used. [Click here for my exact shopping list](https://github.com/jongear/mindcraft#neurosky). Total investment
 is roughly \$200 for both products. After a week I was able to hack together a demo that allowed for liftoff and some very rudimentary steering control.
 
 <blockquote class="twitter-tweet" data-lang="en">
@@ -85,7 +88,7 @@ Cool right? So what is actually going on here? To understand that, we need to di
 </div>
 
 NeuroSky Mindwave headsets are a single channel EEG headset. Which means they have a single contact point to take EEG measurements with. Which is ideal for
-measuing large EEG artifacts such as a blink as well as measuring meditation and attention. In my demo I mentioned that I use a hard blink to control
+measuring large EEG artifacts such as a blink as well as measuring meditation and attention. In my demo, I mentioned that I use a hard blink to control
 takeoff and landing.
 
 ```js
@@ -120,10 +123,10 @@ as it's a more natural starting point. It also allows people to try the demo wit
 </div>
 
 Next up is our flight mechanic. This is a tricky one. Our headset offers two algorithms for predicting intent in meditation and attention. For a while
-I tried to get both working to allow for a 4-directional flight off of 2 axises but I ended up going back to a single axis flight model due to how difficult
-it is to try and fip between meidtation and attention with any level of control.
+I tried to get both working to allow for a 4-directional flight off of 2 axes but I ended up going back to a single axis flight model due to how difficult
+it is to try and flip between meditation and attention with any level of control.
 
-For my demo I chose to isolate the Meditation metric since I'm naturally better at controlling this metric than the Attention one but the code for either is
+For my demo, I chose to isolate the Meditation metric since I'm naturally better at controlling this metric than the Attention one but the code for either is
 interchangeable
 
 ```js
@@ -153,15 +156,21 @@ this.client.on('data', function(data) {
 });
 ```
 
-For the purposes of the demo I decided that any reading below 50% since more than likely this is a strong tell that our pilot isn't actively trying to
-control the drone. Above 50% we have a two directional steering system. If our pilot meditates from 50-75% the drone will turn right. And 75-100% will cause
+For the purposes of the demo, I decided that any reading below 50% since more than likely this is a strong tell that our pilot isn't actively trying to
+control the drone. Above 50% we have a two-directional steering system. If our pilot meditates from 50-75% the drone will turn right. And 75-100% will cause
 the drone to turn left.
 
-Ok perfect, so now we can takeoff, land and turn our drone right or left. But what if we want to go forward and backwards as well as pilot our craft in
-a more controlled way? Well that's where our Mindwave Headset reaches the end of its capabilities. To accomplish this, we are going to need a headset with
+Ok perfect, so now we can take off, land and turn our drone right or left. But what if we want to go forward and backward as well as pilot our craft in
+a more controlled way? Well, that's where our Mindwave Headset reaches the end of its capabilities. To accomplish this, we are going to need a headset with
 more firepower.
 
 ## OpenBCI Ultracortex Demo
+
+Moving forward we have a two-pronged problem. First we need a device with more contact points and second, we need a new method to steer our drone. Adding more
+points of contact will not make a difference if we are still relying on our Meditation approach. But first, let's talk about the device that will help us achieve
+our goal. As you might expect, multiple-channel EEG headsets can span a rather large price point. Ranging anywhere from $600-$20,000 so it is important to make
+sure you find a device that fits your needs as well as is cost-effective. For this decision, I decided to go with OpenBCI's Ultracortex with the Cyton Daisy Board.
+[Click here for my exact shopping list](https://github.com/jongear/mindcraft#openbci).
 
 <div style="text-align:center">
   <img
@@ -171,13 +180,11 @@ more firepower.
   />
 </div>
 
-<div style="text-align:center">
-  <img
-    src={beginningOpenBci}
-    alt="Beginning to configure OpenBCI Ultracortex EEG Headset"
-    style={{ height: '500px' }}
-  />
-</div>
+This is where I feel OpenBCI really shines. OpenBCI offers a unique headset called the Ultracortex Mark IV that can be 3D printed and can support up to 16
+channels of EEG from up to 35 different 10-20 system locations. This is the real power of OpenBCI's offering. Not only do you have a large number of channels to
+work with, but you also have the freedom to use them in any configuration that is most impactful for the work you are attempting to accomplish. The icing on the cake is
+that the 35 different locations follow the 10-20 system which is an international system used by Neurologists, Research Scientists and EEG Hackers alike to
+commonly annotate where along the subject's head each electrode should be placed to reproduce an experiment.
 
 <div style="text-align:center">
   <img
@@ -185,6 +192,9 @@ more firepower.
     alt="Completed OpenBCI Ultracortex EEG Headset"
     style={{ height: '500px' }}
   />
+  <p style="text-align: center; font-style: italic;">
+    Finished with the first 8 electrode mounts and wiring
+  </p>
 </div>
 
 <div style="text-align:center">
@@ -193,11 +203,76 @@ more firepower.
     alt="OpenBCI Ultracortex EEG Headset from the back"
     style={{ height: '500px' }}
   />
+  <p style="text-align: center; font-style: italic;">
+    Fully assembled with all 16 electrode mounts and wiring attached
+  </p>
 </div>
 
+My first question after unboxing OpenBCI's Ultracortex was, ok, where do I put all of these wires? That actually turned out to be a harder question than
+I originally expected. The short answer is, it depends. Placement of the electrode mounts is highly dependent on what EEG sampling you want to observe. OK great,
+so in order to answer that we need to figure out what part of the brain we will need to observe. After a fair amount of asking industry friends and googling I
+learned that the part of the brain I should focus on for this to be most successful is the motor cortex.
+
 <div style="text-align:center">
-  <img src={fullDemo} alt="All demo devices" style={{ height: '500px' }} />
+  <img
+    src={motorCortex}
+    alt="Picture of your motor cortex"
+    style={{ height: '300px' }}
+  />
 </div>
+
+Your motor cortex sits in the middle of your brain and is responsible for all of your voluntary muscular activation. If you visualize wearing a pair of over
+the ear headphones, the band that rises up from those headphones over the top of your head and back down would be roughly where your motor cortex is located.
+
+<div style="text-align:center">
+  <img
+    src={electrodePlacement}
+    alt="10-20 System Electrode Placement Graph"
+    style={{ height: '500px' }}
+  />
+</div>
+
+Being mindful of the fact that our motor cortex runs along a horizontal axis roughly above our ears, I placed electrodes in dense proximity along this axis.
+Taking extra care to not add electrodes to the back of the head which would pick up visual cortex stimulation and skew our results. Once setup, the code is
+rather trivial to record live EEG signals coming from our pilot's brain
+
+```js
+cytonBoard.autoFindOpenBCIBoard().then(portName => {
+  if (portName) {
+    /**
+     * Connect to the board with portName
+     * Only works if one board is plugged in
+     * i.e. cytonBoard.connect(portName).....
+     */
+    cytonBoard
+      .connect(portName) // Port name is a serial port name, see `.listPorts()`
+      .then(() => {
+        cytonBoard.streamStart();
+
+        cytonBoard.on('sample', sample => {
+          /** Work with sample */
+
+          if (sample.valid) {
+            let csv = directionIdx;
+
+            sample.channelData.map(cd => {
+              csv += ',' + cd.toFixed(8);
+            });
+
+            csv += '\n';
+
+            fs.appendFile(`${__dirname}/data/training.csv`, csv, function(err) {
+              if (err) throw err;
+            });
+          }
+        });
+      });
+  } else {
+    /** Unable to auto find OpenBCI board */
+    console.log('Unable to auto find OpenBCI board');
+  }
+});
+```
 
 <div style="text-align:center">
   <img src={mindcraftTraining} alt="The MindCraft training GUI" />
@@ -209,4 +284,8 @@ more firepower.
     alt="THOTCON: Demo of drone flight using OpenBCI Ultracortex EEG Headset"
     style={{ height: '300px' }}
   />
+</div>
+
+<div style="text-align:center">
+  <img src={fullDemo} alt="All demo devices" style={{ height: '500px' }} />
 </div>
