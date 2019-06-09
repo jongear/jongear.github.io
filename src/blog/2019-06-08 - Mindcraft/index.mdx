@@ -25,6 +25,7 @@ import thotconOpenBciSetup from './assets/thotcon-openbci-setup.gif';
 
 import motorCortex from './assets/motor-cortex.jpg';
 import electrodePlacement from './assets/electrode-placement.png';
+import motorImagery from './assets/motor-imagery.jpg';
 
 _All of the code that will be discussed in this post can be found in my GitHub repo [github.com/jongear/mindcraft](https://github.com/jongear/mindcraft)_
 
@@ -223,6 +224,40 @@ learned that the part of the brain I should focus on for this to be most success
 
 Your motor cortex sits in the middle of your brain and is responsible for all of your voluntary muscular activation. If you visualize wearing a pair of over
 the ear headphones, the band that rises up from those headphones over the top of your head and back down would be roughly where your motor cortex is located.
+
+Ok, so why is the motor cortex the right part of the brain for us to focus on? To answer that, we need to learn a little bit more about how our brain works.
+Your motor cortex is responsible for controlling all muscular movement without your body from large scale movements such as running down to finer motor movements
+such as signing your name. When you perform any of these actions it is known as motor activation. Since you are quite literally, activating your muscles to perform
+a task. But it turns out, we also see activity in our motor cortex when we are purely thinking about a movement. This is a common occurrence in athletes who are
+mentally visualizing a set of movements they perform. In these cases where you are thinking about activating your muscles but are not directly activating them,
+your brain is still a beehive of activity. So much so that we can actively track when someone is thinking about moving but not actually moving.
+
+<div style="text-align:center">
+  <img
+    src={motorImagery}
+    alt="Brain scan comparing motor activation and motor imagery"
+    style={{ height: '250px' }}
+  />
+  <p style="text-align: center; font-style: italic;">
+    Image taken from:{' '}
+    <a href="https://www.pnas.org/content/107/9/4430">
+      Cortical activity during motor execution, motor imagery, and imagery-based
+      online feedback
+    </a>
+  </p>
+</div>
+
+In the above image, we can see brain activity in the motor cortex for motor movement (motor activation) and when they are thinking about the movement which is known
+as [Motor Imagery](https://en.wikipedia.org/wiki/Motor_imagery). It is important to note that motor imagery will always produce lower EEG signaling than Motor
+Activation. Which isn't surprising since Motor Activation will actually trigger the downstream muscular system to perform the action. With Motor Imagery we can
+build a flight system based around a subject's thoughts of moving their limbs.
+
+A simple flight control system would be
+
+- right: think about moving right arm
+- left: think about moving left arm
+- forward: think about moving both arms
+- backward: think about moving both legs
 
 <div style="text-align:center">
   <img
