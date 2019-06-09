@@ -53,7 +53,7 @@ basic steering as well as a Take Off/Landing feature and an Emergency panic butt
 <div style="text-align:center">
   <img src={mindcraftSteering} alt="The MindCraft steering GUI" />
   <p style="text-align: center; font-style: italic;">
-    Note: This UI was inspired by{' '}
+    UI was inspired by{' '}
     <a href="https://github.com/wesbos/javascript-drones">
       Wes Bos's JavaScript Drones Repo
     </a>
@@ -66,7 +66,7 @@ basic steering as well as a Take Off/Landing feature and an Emergency panic butt
   <img
     src={mindwaveDrone}
     alt="OpenBCI Ultracortex EEG Headset from the back"
-    style={{ height: '500px' }}
+    style={{ maxHeight: '500px' }}
   />
 </div>
 
@@ -180,7 +180,7 @@ sure you find a device that fits your needs as well as is cost-effective. For th
   <img
     src={unboxingOpenBciGif}
     alt="Unboxing video of OpenBCI Ultracortex EEG Headset"
-    style={{ height: '500px' }}
+    style={{ maxHeight: '500px' }}
   />
 </div>
 
@@ -194,7 +194,7 @@ commonly annotate where along the subject's head each electrode should be placed
   <img
     src={completedOpenBci}
     alt="Completed OpenBCI Ultracortex EEG Headset"
-    style={{ height: '500px' }}
+    style={{ maxHeight: '500px' }}
   />
   <p style="text-align: center; font-style: italic;">
     Finished with the first 8 electrode mounts and wiring
@@ -205,7 +205,7 @@ commonly annotate where along the subject's head each electrode should be placed
   <img
     src={backOfOpenBci}
     alt="OpenBCI Ultracortex EEG Headset from the back"
-    style={{ height: '500px' }}
+    style={{ maxHeight: '500px' }}
   />
   <p style="text-align: center; font-style: italic;">
     Fully assembled with all 16 electrode mounts and wiring attached
@@ -221,7 +221,7 @@ learned that the part of the brain I should focus on for this to be most success
   <img
     src={motorCortex}
     alt="Picture of your motor cortex"
-    style={{ height: '300px' }}
+    style={{ maxHeight: '300px' }}
   />
 </div>
 
@@ -239,7 +239,7 @@ your brain is still a beehive of activity. So much so that we can actively track
   <img
     src={motorImagery}
     alt="Brain scan comparing motor activation and motor imagery"
-    style={{ height: '250px' }}
+    style={{ maxHeight: '250px' }}
   />
   <p style="text-align: center; font-style: italic;">
     Image taken from:{' '}
@@ -266,7 +266,7 @@ A simple flight control system would be
   <img
     src={electrodePlacement}
     alt="10-20 System Electrode Placement Graph"
-    style={{ height: '500px' }}
+    style={{ maxHeight: '500px' }}
   />
 </div>
 
@@ -315,11 +315,23 @@ cytonBoard.autoFindOpenBCIBoard().then(portName => {
 OpenBCI has a fantastic [Cyton SDK](https://github.com/OpenBCI/OpenBCI_NodeJS_Cyton) that retrieval of our live stream data a breeze. You can sample channel data,
 accelerometer data, timings and a host of other data points. [Checkout their GitHub for a full list of libraries and sdk support](https://github.com/OpenBCI).
 
+n order to make model training more straight forward, I created a simple UI in the [MindCraft](https://github.com/jongear/mindcraft) project to track training
+progress as well as initiate a full model train. Upon clicking one of the Start buttons a training session begins. Which tells the backend server to start recording
+live EEG data from our soon-to-be pilot's brain while the pilot concentrates on the Motor Imagery task required.
+
+<div style="text-align:center">
+  <img src={mindcraftTraining} alt="The MindCraft training GUI" />
+</div>
+
+This data is then recorded in a CSV file for offline processing. It is important to note that the first column indicates the direction the pilot was attempting to
+train for as well as all 16 EEG channels worth of measurements. For the purposes of this project, I did not include a timestamp since I didn't feel it would generate
+any useful gain in model performance.
+
 <div style="text-align:center">
   <img
     src={trainingData}
     alt="csv with training data"
-    style={{ height: '450px' }}
+    style={{ maxHeight: '450px' }}
   />
   <p style="text-align: center; font-style: italic;">
     Sample training data. Note the first record in the column is denoted as the
@@ -328,26 +340,31 @@ accelerometer data, timings and a host of other data points. [Checkout their Git
   </p>
 </div>
 
-Since EEG data is inherently messy I opted for a offline training approach for teaching our system intent. I won't go deep into [Machine Learning](https://en.wikipedia.org/wiki/Machine_learning)
-in this blog post but I do want to give you a high level overview of what it takes to go from raw EEG input to decoding intent. I chose an approach known as
-[Supervised Learning](https://en.wikipedia.org/wiki/Supervised_learning) to teach out system to match EEG data to
+Since EEG data is inherently messy I opted for an offline training approach for teaching our system intent. I won't go deep into [Machine Learning](https://en.wikipedia.org/wiki/Machine_learning)
+in this blog post but I do want to give you a high-level overview of what it takes to go from raw EEG input to decoding intent. I chose an approach known as
+[Supervised Learning](https://en.wikipedia.org/wiki/Supervised_learning) to teach our system to match EEG data to the intended direction. The gist is at the time
+of data record we also are saving what action the data is for. Our pilot starts a training session thinking about moving their right arm and we tag all EEG
+data we record during this window as being related to their right arm. Similar for the left, forward and backward directions.
 
 <div style="text-align:center">
   <img
     src={tensorflowTraining}
     alt="Tensorflow training showing ~70% accuracy"
-    style={{ height: '450px' }}
+    style={{ maxHeight: '450px' }}
   />
+  <p style="text-align: center; font-style: italic;">
+    Tensorflow training iterations. Attempted to increase accuracy with each
+    iteration by fine tuning hyperparameters
+  </p>
 </div>
 
-<div style="text-align:center">
-  <img src={mindcraftTraining} alt="The MindCraft training GUI" />
-</div>
+Once we accumulate enough of this data we run it through a machine learning algorithm to correlate intent to the data. For the purposes of this project I used
+[TensorFlow](https://www.tensorflow.org/js) which is a machine learning library developed by Google.
 
 <div style="text-align:center">
   <img
     src={thotconOpenBciSetup}
     alt="THOTCON: Demo of drone flight using OpenBCI Ultracortex EEG Headset"
-    style={{ height: '300px' }}
+    style={{ maxHeight: '300px' }}
   />
 </div>
