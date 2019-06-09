@@ -41,6 +41,14 @@ const Content = styled.article`
     margin-bottom: 1rem;
     font-size: 16px;
   }
+
+  .img-container {
+    text-align: center;
+
+    img {
+      max-width: 100%;
+    }
+  }
 `;
 
 const Title = styled.h1`

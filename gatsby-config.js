@@ -13,6 +13,7 @@ module.exports = {
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
+    'gatsby-plugin-twitter',
     'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-source-filesystem',
