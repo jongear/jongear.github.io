@@ -1,0 +1,69 @@
+---
+date: '2019-07-06'
+title: 'Copy Git history from one repository to another'
+categories:
+  - Git
+---
+
+Ever need to migrate a codebase AND keep the commit history? Same. Recently I needed to migrate a codebase from one Git provider
+to another. I wanted to preserve the commit history since this was an npm library with versioning which meant a copy/paste over
+of the files would not work.
+
+Let's walkthrough migrating a Git repository from Bitbucket to GitHub. First, let's check what our attached remotes are
+
+```sh
+╰─ git remote -v
+origin    git@bitbucket.org:jongear/my-repo.git (fetch)
+origin    git@bitbucket.org:jongear/my-repo.git (push)
+```
+
+Here you can see my `origin` is set to `git@bitbucket.org:jongear/my-repo`, Git allows you to have multiple remotes attached which will
+be important. I created a holding repo in GitHub that I would like to migrate to. Let's say the name is `jongear/new-repo`. Next, let's
+add the new repo as a remote in our existing local Bitbucket repository
+
+```sh
+╰─ git remote add gh-origin https://github.com/jongear/new-repo.git
+╰─ git remote -v
+gh-origin    https://github.com/jongear/new-repo.git (fetch)
+gh-origin    https://github.com/jongear/new-repo.git (push)
+origin    git@bitbucket.org:jongear/my-repo.git (fetch)
+origin    git@bitbucket.org:jongear/my-repo.git (push)
+```
+
+Great, so now we can see our codebase has two origins attached. The original Bitbucket origin and our new GitHub one. To migrate our changes
+to the new GitHub repository, we need to initiate a push command
+
+```sh
+╰─ git push gh-origin master
+Counting objects: 11815, done.
+Compressing objects: 100% (6605/6605), done.
+Writing objects: 100% (11815/11815), 7.17 MiB | 7.03 MiB/s, done.
+Total 11815 (delta 4358), reused 11815 (delta 4358)
+remote: Resolving deltas: 100% (4358/4358), done.
+To https://github.com/jongear/new-repo.git
+ * [new branch]       master -> master
+```
+
+You can do this for any other significant branches you have such as a `develop` branch. Once you have everything the way you like it.
+
+Now it's time to unhook the old provider. `git remote rm {originName}` will remove an origin-based off the name provided. Since we no longer
+care about our Bitbucket origin, we will remove it.
+
+```sh
+╰─ git remote rm origin
+╰─ git remote -v
+gh-origin    https://github.com/jongear/new-repo.git (fetch)
+gh-origin    https://github.com/jongear/new-repo.git (push)
+```
+
+Now that our Bitbucket origin has been removed, let's rename our GitHub origin from `gh-origin` to `origin`
+
+```sh
+╰─ git remote rename gh-origin origin
+╰─ git remote -v
+origin https://github.com/jongear/new-repo.git (fetch)
+origin https://github.com/jongear/new-repo.git (push)
+```
+
+And there we go. We successfully migrated our code to a new Git provider and changed our origin to point to our new provider. We are safe to
+tear down our old repository.
