@@ -46,35 +46,35 @@ const Excerpt = styled.p`
 `;
 
 const Article = ({ title, date, excerpt, slug, timeToRead, categories }) => {
-    const firstChar = title.charAt(0);
+  const firstChar = title.charAt(0);
 
-    return (
-        <Post>
-            <Title>
-                <Initial>{firstChar}</Initial>
-                <Link to={slug}>{title}</Link>
-            </Title>
-            <Subline>
-                {date} &mdash; {timeToRead} Min Read &mdash; In{' '}
-                {categories.map((cat, i) => (
-                    <React.Fragment key={cat}>
-                        {!!i && ', '}
-                        <Link to={`/categories/${kebabCase(cat)}`}>{cat}</Link>
-                    </React.Fragment>
-                ))}
-            </Subline>
-            <Excerpt>{excerpt}</Excerpt>
-        </Post>
-    );
+  return (
+    <Post>
+      <Title>
+        <Initial>{firstChar}</Initial>
+        <Link to={slug}>{title}</Link>
+      </Title>
+      <Subline>
+        {date} &mdash; {timeToRead} Min Read &mdash; In{' '}
+        {categories.map((cat, i) => (
+          <React.Fragment key={cat}>
+            {!!i && ', '}
+            <Link to={`/categories/${kebabCase(cat)}`}>{cat}</Link>
+          </React.Fragment>
+        ))}
+      </Subline>
+      <Excerpt>{excerpt}</Excerpt>
+    </Post>
+  );
 };
 
 export default Article;
 
 Article.propTypes = {
-    title: PropTypes.string.isRequired,
-    date: PropTypes.string.isRequired,
-    excerpt: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    timeToRead: PropTypes.number.isRequired,
-    categories: PropTypes.array.isRequired,
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  excerpt: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
+  timeToRead: PropTypes.number.isRequired,
+  categories: PropTypes.array.isRequired,
 };
