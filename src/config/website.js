@@ -15,7 +15,7 @@ module.exports = {
   siteLogo: '/social/logo.png', // Image for schemaORGJSONLD
 
   // siteFBAppID: '123456789', // Facebook App ID - Optional
-  userTwitter: '@GearedUpTech', // Twitter Username - Optional
+  userTwitter: '@JonGearDev', // Twitter Username - Optional
   ogSiteName: 'gear.dev', // Facebook Site Name - Optional
   ogLanguage: 'en_US', // Facebook Language
   googleAnalyticsID: 'UA-138298871-1',

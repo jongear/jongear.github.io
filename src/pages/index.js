@@ -191,7 +191,7 @@ const IndexPage = () => {
                 <a href="/blog">Blog</a>
               </li>
               <li>
-                <a href="https://twitter.com/geareduptech" target="_blank">
+                <a href="https://twitter.com/JonGearDev" target="_blank">
                   Twitter
                 </a>
               </li>
