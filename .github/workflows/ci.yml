@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x]
+        node-version: [22.x]
 
     steps:
       - name: Checkout code
@@ -27,9 +27,7 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: |
-          npm install -g npm@5.8.0
-          npm ci
+        run: npm ci
 
       - name: Run linting
         run: npm run lint

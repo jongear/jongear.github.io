@@ -1,15 +1,15 @@
 const _ = require('lodash');
 
 // graphql function doesn't throw an error so we have to check to check for the result.errors to throw manually
-const wrapper = promise =>
-  promise.then(result => {
+const wrapper = (promise) =>
+  promise.then((result) => {
     if (result.errors) {
       throw result.errors;
     }
     return result;
   });
 
-exports.onCreateNode = ({ node, actions }) => {
+exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
 
   let slug;
@@ -27,6 +27,16 @@ exports.onCreateNode = ({ node, actions }) => {
       slug = `/${_.kebabCase(node.frontmatter.title)}`;
     }
     createNodeField({ node, name: 'slug', value: slug });
+
+    // Calculate reading time
+    const parent = getNode(node.parent);
+    if (parent && parent.internal && parent.internal.content) {
+      const content = parent.internal.content;
+      const wordsPerMinute = 200;
+      const wordCount = content.split(/\s+/).length;
+      const readingTime = Math.ceil(wordCount / wordsPerMinute);
+      createNodeField({ node, name: 'timeToRead', value: readingTime });
+    }
   }
 };
 
@@ -39,7 +49,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const result = await wrapper(
     graphql(`
       {
-        allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+        allMdx(sort: { frontmatter: { date: DESC } }) {
           edges {
             node {
               fields {
@@ -48,6 +58,10 @@ exports.createPages = async ({ graphql, actions }) => {
               frontmatter {
                 title
                 categories
+              }
+              id
+              internal {
+                contentFilePath
               }
             }
           }
@@ -64,7 +78,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
     createPage({
       path: edge.node.fields.slug,
-      component: postTemplate,
+      component: `${postTemplate}?__contentFilePath=${edge.node.internal.contentFilePath}`,
       context: {
         slug: edge.node.fields.slug,
         prev,
@@ -75,9 +89,9 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const categorySet = new Set();
 
-  _.each(posts, edge => {
+  _.each(posts, (edge) => {
     if (_.get(edge, 'node.frontmatter.categories')) {
-      edge.node.frontmatter.categories.forEach(cat => {
+      edge.node.frontmatter.categories.forEach((cat) => {
         categorySet.add(cat);
       });
     }
@@ -85,7 +99,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const categories = Array.from(categorySet);
 
-  categories.forEach(category => {
+  categories.forEach((category) => {
     createPage({
       path: `/categories/${_.kebabCase(category)}`,
       component: categoryTemplate,

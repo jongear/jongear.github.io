@@ -36,7 +36,7 @@ A little over a year ago I stumbled across a demo by [Alex Castillo](https://twi
 To say I was inspired is an understatement. I immediately DMed Alex and asked him what hardward he leveraged for his demo. Alex graciously shared his hardware
 recommendations along with a few pointers.
 
-<blockquote class="twitter-tweet" data-lang="en">
+<blockquote className="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">
     Mind-controlling a Drone with JavaScript is eaiser than it sounds.{' '}
     <a href="https://t.co/8XxXgxla5m">pic.twitter.com/8XxXgxla5m</a>
@@ -50,9 +50,9 @@ Before I started working on the "mind-control" portion of this project. I recogn
 maiden flight goes sideways causing my drone to drift towards my living room tv. Out of that need the Mindcraft Flight Control Center was born. Complete with
 basic steering as well as a Take Off/Landing feature and an Emergency panic button for good measure.
 
-<div class="img-container">
+<div className="img-container">
   <img src={mindcraftSteering} alt="The MindCraft steering GUI" />
-  <p style="text-align: center; font-style: italic;">
+  <p style={{textAlign: "center", fontStyle: "italic"}}>
     UI was inspired by{' '}
     <a href="https://github.com/wesbos/javascript-drones">
       Wes Bos's JavaScript Drones Repo
@@ -62,7 +62,7 @@ basic steering as well as a Take Off/Landing feature and an Emergency panic butt
 
 ## NeuroSky Mindwave Demo
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={mindwaveDrone}
     alt="OpenBCI Ultracortex EEG Headset from the back"
@@ -74,7 +74,7 @@ Based off Alex's [recommendations](https://twitter.com/castillo__io/status/98623
 minidrone to the one he used. [Click here for my exact shopping list](https://github.com/jongear/mindcraft#neurosky). Total investment
 is roughly \$200 for both products. After a week I was able to hack together a demo that allowed for liftoff and some very rudimentary steering control.
 
-<blockquote class="twitter-tweet" data-lang="en">
+<blockquote className="twitter-tweet" data-lang="en">
   <p lang="en" dir="ltr">
     I built a mind control setup for my drone! 🤓 👾
     <a href="https://t.co/D1HI8d86dW">pic.twitter.com/D1HI8d86dW</a>
@@ -84,7 +84,7 @@ is roughly \$200 for both products. After a week I was able to hack together a d
 
 Cool right? So what is actually going on here? To understand that, we need to dive a little deeper into what the MindWave headset's capabilities are.
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={mindwaveTutorial}
     alt="Showing the NeuroSky Mindwave Tutorial UI which tests blink, meditation and attention"
@@ -119,7 +119,7 @@ this.client.on('blink_data', function(data) {
 By using the blink readings we now have the ability to decide when to start our flight and when to end it. I purposefully picked blinks as my takeoff option
 as it's a more natural starting point. It also allows people to try the demo without fear of accidentally sending the drone into flight.
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={mindwaveTutorial}
     alt="Showing the NeuroSky Mindwave Tutorial UI which tests blink, meditation and attention"
@@ -176,7 +176,7 @@ our goal. As you might expect, multiple-channel EEG headsets can span a rather l
 sure you find a device that fits your needs as well as is cost-effective. For this decision, I decided to go with OpenBCI's Ultracortex with the Cyton Daisy Board.
 [Click here for my exact shopping list](https://github.com/jongear/mindcraft#openbci).
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={unboxingOpenBciGif}
     alt="Unboxing video of OpenBCI Ultracortex EEG Headset"
@@ -190,24 +190,24 @@ work with, but you also have the freedom to use them in any configuration that i
 that the 35 different locations follow the 10-20 system which is an international system used by Neurologists, Research Scientists and EEG Hackers alike to
 commonly annotate where along the subject's head each electrode should be placed to reproduce an experiment.
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={completedOpenBci}
     alt="Completed OpenBCI Ultracortex EEG Headset"
     style={{ maxHeight: '500px' }}
   />
-  <p style="text-align: center; font-style: italic;">
+  <p style={{textAlign: "center", fontStyle: "italic"}}>
     Finished with the first 8 electrode mounts and wiring
   </p>
 </div>
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={backOfOpenBci}
     alt="OpenBCI Ultracortex EEG Headset from the back"
     style={{ maxHeight: '500px' }}
   />
-  <p style="text-align: center; font-style: italic;">
+  <p style={{textAlign: "center", fontStyle: "italic"}}>
     Fully assembled with all 16 electrode mounts and wiring attached
   </p>
 </div>
@@ -217,7 +217,7 @@ I originally expected. The short answer is, it depends. Placement of the electro
 so in order to answer that we need to figure out what part of the brain we will need to observe. After a fair amount of asking industry friends and googling I
 learned that the part of the brain I should focus on for this to be most successful is the [Motor Cortex](https://en.wikipedia.org/wiki/Motor_cortex).
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={motorCortex}
     alt="Picture of your motor cortex"
@@ -235,13 +235,13 @@ a task. But it turns out, we also see activity in our motor cortex when we are p
 mentally visualizing a set of movements they perform. In these cases where you are thinking about activating your muscles but are not directly activating them,
 your brain is still a beehive of activity. So much so that we can actively track when someone is thinking about moving but not actually moving.
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={motorImagery}
     alt="Brain scan comparing motor activation and motor imagery"
     style={{ maxHeight: '250px' }}
   />
-  <p style="text-align: center; font-style: italic;">
+  <p style={{textAlign: "center", fontStyle: "italic"}}>
     Image taken from:{' '}
     <a href="https://www.pnas.org/content/107/9/4430">
       Cortical activity during motor execution, motor imagery, and imagery-based
@@ -262,7 +262,7 @@ A simple flight control system would be
 - forward: think about moving both arms
 - backward: think about moving both legs
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={electrodePlacement}
     alt="10-20 System Electrode Placement Graph"
@@ -319,7 +319,7 @@ n order to make model training more straight forward, I created a simple UI in t
 progress as well as initiate a full model train. Upon clicking one of the Start buttons a training session begins. Which tells the backend server to start recording
 live EEG data from our soon-to-be pilot's brain while the pilot concentrates on the Motor Imagery task required.
 
-<div class="img-container">
+<div className="img-container">
   <img src={mindcraftTraining} alt="The MindCraft training GUI" />
 </div>
 
@@ -327,13 +327,13 @@ This data is then recorded in a CSV file for offline processing. It is important
 train for as well as all 16 EEG channels worth of measurements. For the purposes of this project, I did not include a timestamp since I didn't feel it would generate
 any useful gain in model performance.
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={trainingData}
     alt="csv with training data"
     style={{ maxHeight: '450px' }}
   />
-  <p style="text-align: center; font-style: italic;">
+  <p style={{textAlign: "center", fontStyle: "italic"}}>
     Sample training data. Note the first record in the column is denoted as the
     "direction". This is the direction the pilot was thinking of when the data
     was recorded
@@ -346,13 +346,13 @@ in this blog post but I do want to give you a high-level overview of what it tak
 of data record we also are saving what action the data is for. Our pilot starts a training session thinking about moving their right arm and we tag all EEG
 data we record during this window as being related to their right arm. Similar for the left, forward and backward directions.
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={tensorflowTraining}
     alt="Tensorflow training showing ~70% accuracy"
     style={{ maxHeight: '450px' }}
   />
-  <p style="text-align: center; font-style: italic;">
+  <p style={{textAlign: "center", fontStyle: "italic"}}>
     Tensorflow training iterations. Attempted to increase accuracy with each
     iteration by fine tuning hyperparameters
   </p>
@@ -362,7 +362,7 @@ Once we accumulate enough of this data we run it through a machine learning algo
 [TensorFlow](https://www.tensorflow.org/js) which is a machine learning library developed by Google. And that's it! We are now able to control a drone simply by thinking
 about moving one of our limbs! Pretty cool right?
 
-<div class="img-container">
+<div className="img-container">
   <img
     src={thotconOpenBciSetup}
     alt="THOTCON: Demo of drone flight using OpenBCI Ultracortex EEG Headset"

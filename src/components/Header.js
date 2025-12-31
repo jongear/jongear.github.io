@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Wrapper = styled.header`
-  background: ${props => props.theme.colors.homepageCard};
+  background: ${(props) => props.theme.colors.homepageCard};
   grid-column: 1 / -1;
   margin-left: -1rem;
   margin-right: -1rem;
@@ -12,15 +12,15 @@ const Wrapper = styled.header`
 `;
 
 const Content = styled.div`
-  max-width: ${props => props.theme.maxWidth};
+  max-width: ${(props) => props.theme.maxWidth};
   margin: 0 auto;
 
   a {
-    color: ${props => props.theme.colors.primaryFontColor};
+    color: ${(props) => props.theme.colors.primaryFontColor};
     font-size: 1.2rem;
     &:hover {
       opacity: 0.85;
-      color: ${props => props.theme.colors.primaryFontColor};
+      color: ${(props) => props.theme.colors.primaryFontColor};
     }
   }
 `;

@@ -23,14 +23,15 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-google-analytics',
+      resolve: 'gatsby-plugin-google-gtag',
       options: {
-        trackingId: config.googleAnalyticsID,
+        trackingIds: [config.googleAnalyticsID],
       },
     },
     {
-      resolve: 'gatsby-mdx',
+      resolve: 'gatsby-plugin-mdx',
       options: {
+        extensions: ['.mdx', '.md'],
         gatsbyRemarkPlugins: [
           {
             resolve: 'gatsby-remark-external-links',
@@ -48,14 +49,12 @@ module.exports = {
               linkImagesToOriginal: false,
             },
           },
-          // TODO: Replace with "mdx-component-autolink-headers"
           {
             resolve: 'gatsby-remark-autolink-headers',
             options: {
               maintainCase: false,
             },
           },
-          //'gatsby-remark-copy-linked-files'
         ],
       },
     },

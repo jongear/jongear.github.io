@@ -1,6 +1,6 @@
 {
-  "extends": ["prettier", "prettier/react"],
-  "parser": "babel-eslint",
+  "extends": ["prettier"],
+  "parser": "@babel/eslint-parser",
   "plugins": ["prettier"],
   "rules": {
     "prettier/prettier": "error",
@@ -8,15 +8,18 @@
   },
   "env": {
     "node": true,
-    "es6": true
+    "browser": true,
+    "es2021": true
   },
   "parserOptions": {
-    "ecmaVersion": 8,
+    "ecmaVersion": "latest",
     "ecmaFeatures": {
-      "experimentalObjectRestSpread": true,
-      "jsx": true,
-      "modules": true
+      "jsx": true
     },
-    "sourceType": "module"
+    "sourceType": "module",
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    }
   }
 }

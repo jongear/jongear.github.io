@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link, graphql } from 'gatsby';
 import styled from 'styled-components';
-import logo from '../images/logo.svg';
 import {
   Layout,
   Wrapper,
@@ -19,13 +18,13 @@ const Content = styled.div`
   box-shadow: 0 4px 120px rgba(0, 0, 0, 0.1);
   border-radius: 1rem;
   padding: 2rem 4rem;
-  background-color: ${props => props.theme.colors.bg};
+  background-color: ${(props) => props.theme.colors.bg};
   z-index: 9000;
   margin-top: -3rem;
-  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 3rem 3rem;
   }
-  @media (max-width: ${props => props.theme.breakpoints.phone}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.phone}) {
     padding: 2rem 1.5rem;
   }
 `;
@@ -41,23 +40,20 @@ const Category = ({ pageContext: { category }, data: { allMdx } }) => {
       <Wrapper>
         <Helmet title={`Category: ${category} | ${config.siteTitle}`} />
         <Header>
-          <Link to="/blog">
-            <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
-            {config.blogTitle}
-          </Link>
+          <Link to="/blog">{config.blogTitle}</Link>
         </Header>
         <Content>
           <SectionTitle>Category &ndash; {category}</SectionTitle>
           <Subline sectionTitle>
             {subline} (See <Link to="/categories">all categories</Link>)
           </Subline>
-          {edges.map(post => (
+          {edges.map((post) => (
             <Article
               title={post.node.frontmatter.title}
               date={post.node.frontmatter.date}
               excerpt={post.node.excerpt}
-              timeToRead={post.node.timeToRead}
               slug={post.node.fields.slug}
+              timeToRead={post.node.fields.timeToRead}
               categories={post.node.frontmatter.categories}
               key={post.node.fields.slug}
             />
@@ -85,7 +81,7 @@ Category.propTypes = {
 export const postQuery = graphql`
   query CategoryPage($category: String!) {
     allMdx(
-      sort: { fields: [frontmatter___date], order: DESC }
+      sort: { frontmatter: { date: DESC } }
       filter: { frontmatter: { categories: { eq: $category } } }
     ) {
       totalCount
@@ -98,9 +94,9 @@ export const postQuery = graphql`
           }
           fields {
             slug
+            timeToRead
           }
           excerpt(pruneLength: 300)
-          timeToRead
         }
       }
     }

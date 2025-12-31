@@ -1,14 +1,14 @@
 import React from 'react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import theme from '../config/theme';
-import logo from '../images/logo.svg';
+const logo = '/images/logo.svg';
 import { SEO } from '../components';
 import useBuildTime from '../hooks/useBuildTime';
 
 const GlobalStyle = createGlobalStyle`
   html {
-    font-family: ${props => props.theme.fontFamily.sansSerif};
-    font-size: ${props => props.theme.fontSize.small};
+    font-family: ${(props) => props.theme.fontFamily.sansSerif};
+    font-size: ${(props) => props.theme.fontSize.small};
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
     font: 112.5%/1.45em georgia, serif;
@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     background: rgba(244,244,244,0.8);
-    font-family: ${props => props.theme.fontFamily.sansSerif};
+    font-family: ${(props) => props.theme.fontFamily.sansSerif};
     font-weight: normal;
   }
 
@@ -45,7 +45,7 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
 
-  color: ${props => props.theme.colors.primaryFontColor};
+  color: ${(props) => props.theme.colors.primaryFontColor};
   min-height: 95vh;
 
   margin: 0 auto;
@@ -53,10 +53,10 @@ const Container = styled.div`
   padding: 0px 2.5875rem 1.45rem;
   padding-top: 0;
 
-  font-family: ${props => props.theme.fontFamily.sansSerif};
+  font-family: ${(props) => props.theme.fontFamily.sansSerif};
   font-size: 18px;
   font-weight: 800px;
-  color: ${props => props.theme.colors.primaryFontColor};
+  color: ${(props) => props.theme.colors.primaryFontColor};
 
   @media only screen and (max-width: 640px) {
     margin: 0 auto;
@@ -81,7 +81,7 @@ const Card = styled.div`
   align-items: center;
   justify-content: center;
 
-  background: ${props => props.theme.colors.homepageCard};
+  background: ${(props) => props.theme.colors.homepageCard};
 
   min-width: 600px;
   max-width: 700px;
@@ -121,7 +121,7 @@ const Welcome = styled.div`
 
   font-size: 3rem;
   font-weight: 800;
-  font-family: ${props => props.theme.fontFamily.serif};
+  font-family: ${(props) => props.theme.fontFamily.serif};
 
   @media only screen and (max-width: 400px) {
     font-size: 2rem;
@@ -153,13 +153,13 @@ const Links = styled.ul`
 
     &:hover {
       box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.3);
-      background: ${props => props.theme.colors.primary};
+      background: ${(props) => props.theme.colors.primary};
     }
 
     a {
       display: inline-block;
       padding: 0.5rem 0.75rem;
-      color: ${props => props.theme.colors.primaryFontColor};
+      color: ${(props) => props.theme.colors.primaryFontColor};
       text-decoration: none;
     }
   }

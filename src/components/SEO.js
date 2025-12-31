@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 
 import config from '../config/website';
 
-const SEO = props => {
+const SEO = (props) => {
   const { postNode, postPath, article, buildTime } = props;
 
   let title;
@@ -107,7 +107,7 @@ const SEO = props => {
         '@type': 'Person',
         name: config.author,
       },
-      copyrightYear: postNode.parent.birthtime,
+      copyrightYear: postNode.parent.birthTime,
       creator: {
         '@type': 'Person',
         name: config.author,
@@ -120,7 +120,7 @@ const SEO = props => {
           url: `${homeURL}${config.siteLogo}`,
         },
       },
-      datePublished: postNode.parent.birthtime,
+      datePublished: postNode.parent.birthTime,
       dateModified: postNode.parent.mtime,
       description,
       headline: title,
