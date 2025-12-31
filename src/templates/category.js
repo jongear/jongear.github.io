@@ -18,13 +18,13 @@ const Content = styled.div`
   box-shadow: 0 4px 120px rgba(0, 0, 0, 0.1);
   border-radius: 1rem;
   padding: 2rem 4rem;
-  background-color: ${props => props.theme.colors.bg};
+  background-color: ${(props) => props.theme.colors.bg};
   z-index: 9000;
   margin-top: -3rem;
-  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 3rem 3rem;
   }
-  @media (max-width: ${props => props.theme.breakpoints.phone}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.phone}) {
     padding: 2rem 1.5rem;
   }
 `;
@@ -40,16 +40,14 @@ const Category = ({ pageContext: { category }, data: { allMdx } }) => {
       <Wrapper>
         <Helmet title={`Category: ${category} | ${config.siteTitle}`} />
         <Header>
-          <Link to="/blog">
-            {config.blogTitle}
-          </Link>
+          <Link to="/blog">{config.blogTitle}</Link>
         </Header>
         <Content>
           <SectionTitle>Category &ndash; {category}</SectionTitle>
           <Subline sectionTitle>
             {subline} (See <Link to="/categories">all categories</Link>)
           </Subline>
-          {edges.map(post => (
+          {edges.map((post) => (
             <Article
               title={post.node.frontmatter.title}
               date={post.node.frontmatter.date}
@@ -83,7 +81,7 @@ Category.propTypes = {
 export const postQuery = graphql`
   query CategoryPage($category: String!) {
     allMdx(
-      sort: {frontmatter: {date: DESC}}
+      sort: { frontmatter: { date: DESC } }
       filter: { frontmatter: { categories: { eq: $category } } }
     ) {
       totalCount

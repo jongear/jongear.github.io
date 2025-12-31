@@ -1,8 +1,8 @@
 const _ = require('lodash');
 
 // graphql function doesn't throw an error so we have to check to check for the result.errors to throw manually
-const wrapper = promise =>
-  promise.then(result => {
+const wrapper = (promise) =>
+  promise.then((result) => {
     if (result.errors) {
       throw result.errors;
     }
@@ -49,7 +49,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const result = await wrapper(
     graphql(`
       {
-        allMdx(sort: {frontmatter: {date: DESC}}) {
+        allMdx(sort: { frontmatter: { date: DESC } }) {
           edges {
             node {
               fields {
@@ -89,9 +89,9 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const categorySet = new Set();
 
-  _.each(posts, edge => {
+  _.each(posts, (edge) => {
     if (_.get(edge, 'node.frontmatter.categories')) {
-      edge.node.frontmatter.categories.forEach(cat => {
+      edge.node.frontmatter.categories.forEach((cat) => {
         categorySet.add(cat);
       });
     }
@@ -99,7 +99,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const categories = Array.from(categorySet);
 
-  categories.forEach(category => {
+  categories.forEach((category) => {
     createPage({
       path: `/categories/${_.kebabCase(category)}`,
       component: categoryTemplate,

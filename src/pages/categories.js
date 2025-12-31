@@ -13,13 +13,13 @@ const Content = styled.div`
   box-shadow: 0 4px 120px rgba(0, 0, 0, 0.1);
   border-radius: 1rem;
   padding: 2rem 4rem;
-  background-color: ${props => props.theme.colors.bg};
+  background-color: ${(props) => props.theme.colors.bg};
   z-index: 9000;
   margin-top: -3rem;
-  @media (max-width: ${props => props.theme.breakpoints.tablet}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
     padding: 3rem 3rem;
   }
-  @media (max-width: ${props => props.theme.breakpoints.phone}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.phone}) {
     padding: 2rem 1.5rem;
   }
 `;
@@ -46,7 +46,7 @@ const Category = ({
       </Header>
       <Content>
         <SectionTitle>Categories</SectionTitle>
-        {group.map(category => (
+        {group.map((category) => (
           <Title key={category.fieldValue}>
             <Link to={`/categories/${kebabCase(category.fieldValue)}`}>
               {category.fieldValue}
@@ -72,7 +72,7 @@ Category.propTypes = {
 export const postQuery = graphql`
   query CategoriesPage {
     allMdx {
-      group(field: {frontmatter: {categories: SELECT}}) {
+      group(field: { frontmatter: { categories: SELECT } }) {
         fieldValue
         totalCount
       }

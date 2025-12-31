@@ -1,7 +1,4 @@
-/* eslint react/jsx-boolean-value: 0 */
 /* eslint no-unused-vars: 0 */
-/* eslint react/prop-types: 0 */
-/* eslint react/destructuring-assignment: 0 */
 import React from 'react';
 import { Highlight, themes } from 'prism-react-renderer';
 import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
@@ -9,11 +6,7 @@ import { LiveProvider, LiveEditor, LiveError, LivePreview } from 'react-live';
 const Code = ({ codeString, language, ...props }) => {
   return (
     <div>
-      <Highlight
-        code={codeString}
-        language={language}
-        theme={themes.vsDark}
-      >
+      <Highlight code={codeString} language={language} theme={themes.vsDark}>
         {({ className, style, tokens, getLineProps, getTokenProps }) => (
           <pre className={className} style={style}>
             {tokens.map((line, i) => (

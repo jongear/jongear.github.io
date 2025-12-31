@@ -12,7 +12,7 @@ const Post = styled.article`
   margin-top: 3.5rem;
   margin-bottom: 3.5rem;
 
-  @media (max-width: ${props => props.theme.breakpoints.phone}) {
+  @media (max-width: ${(props) => props.theme.breakpoints.phone}) {
     margin-top: 2rem;
     margin-bottom: 2rem;
   }
@@ -23,9 +23,9 @@ const Title = styled.h2`
   text-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
   margin-bottom: 0.75rem;
   a {
-    color: ${props => props.theme.colors.grey.dark};
+    color: ${(props) => props.theme.colors.grey.dark};
     &:hover {
-      color: ${props => props.theme.colors.primaryLight};
+      color: ${(props) => props.theme.colors.primaryLight};
     }
   }
 `;
