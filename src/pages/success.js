@@ -5,7 +5,7 @@ import Helmet from 'react-helmet';
 import { Link } from 'gatsby';
 import styled from 'styled-components';
 import { Layout, Wrapper, Header } from '../components';
-import logo from '../images/logo.svg';
+const logo = '/images/logo.svg';
 import config from '../config/website';
 
 const Content = styled.div`

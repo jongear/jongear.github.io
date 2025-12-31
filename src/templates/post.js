@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import styled from 'styled-components';
 import kebabCase from 'lodash/kebabCase';
-import MDXRenderer from 'gatsby-mdx/mdx-renderer';
-import ReactDisqusComments from 'react-disqus-comments';
-import logo from '../images/logo.svg';
 import { Layout, Wrapper, Header, Subline, SEO, PrevNext } from '../components';
 import config from '../config/website';
 
@@ -59,24 +56,12 @@ const PostContent = styled.div`
   margin-top: 4rem;
 `;
 
-const DisqusContainer = styled.div`
-  margin-top: 2rem;
-`;
-
 const Post = ({
   pageContext: { slug, prev, next },
-  data: { mdx: postNode, site },
-  location,
+  data: { mdx: postNode },
+  children,
 }) => {
   const post = postNode.frontmatter;
-
-  const disqus = {
-    shortname: config.disqusShortName,
-    url: `${site.siteMetadata.siteUrl}${location.pathname}`,
-    identifier: location.pathname,
-    title: post.title.text,
-    language: 'en',
-  };
 
   return (
     <Layout>
@@ -84,14 +69,13 @@ const Post = ({
         <SEO postPath={slug} postNode={postNode} article />
         <Header>
           <Link to="/blog">
-            <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
             {config.blogTitle}
           </Link>
         </Header>
         <Content>
           <Title>{post.title}</Title>
           <Subline>
-            {post.date} &mdash; {postNode.timeToRead} Min Read &mdash; In{' '}
+            {post.date} &mdash; In{' '}
             {post.categories.map((cat, i) => (
               <React.Fragment key={cat}>
                 {!!i && ', '}
@@ -100,12 +84,9 @@ const Post = ({
             ))}
           </Subline>
           <PostContent>
-            <MDXRenderer>{postNode.code.body}</MDXRenderer>
+            {children}
           </PostContent>
           <PrevNext prev={prev} next={next} />
-          <DisqusContainer>
-            <ReactDisqusComments {...disqus} />
-          </DisqusContainer>
         </Content>
       </Wrapper>
     </Layout>
@@ -123,7 +104,7 @@ Post.propTypes = {
   data: PropTypes.shape({
     mdx: PropTypes.object.isRequired,
   }).isRequired,
-  location: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 Post.defaultProps = {
@@ -135,22 +116,13 @@ Post.defaultProps = {
 
 export const postQuery = graphql`
   query postBySlug($slug: String!) {
-    site {
-      siteMetadata {
-        siteUrl
-      }
-    }
     mdx(fields: { slug: { eq: $slug } }) {
-      code {
-        body
-      }
       excerpt(pruneLength: 300)
       frontmatter {
         title
         date(formatString: "MM/DD/YYYY")
         categories
       }
-      timeToRead
       parent {
         ... on File {
           mtime

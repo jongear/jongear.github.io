@@ -49,6 +49,10 @@ exports.createPages = async ({ graphql, actions }) => {
                 title
                 categories
               }
+              id
+              internal {
+                contentFilePath
+              }
             }
           }
         }
@@ -64,7 +68,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
     createPage({
       path: edge.node.fields.slug,
-      component: postTemplate,
+      component: `${postTemplate}?__contentFilePath=${edge.node.internal.contentFilePath}`,
       context: {
         slug: edge.node.fields.slug,
         prev,

@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { createGlobalStyle, ThemeProvider } from 'styled-components';
 import theme from '../config/theme';
-import logo from '../images/logo.svg';
+const logo = '/images/logo.svg';
 import { SEO } from '../components';
 import useBuildTime from '../hooks/useBuildTime';
 

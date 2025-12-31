@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import { Link, graphql } from 'gatsby';
 import styled from 'styled-components';
-import logo from '../images/logo.svg';
 import {
   Layout,
   Wrapper,
@@ -42,7 +41,6 @@ const Category = ({ pageContext: { category }, data: { allMdx } }) => {
         <Helmet title={`Category: ${category} | ${config.siteTitle}`} />
         <Header>
           <Link to="/blog">
-            <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
             {config.blogTitle}
           </Link>
         </Header>
@@ -56,7 +54,6 @@ const Category = ({ pageContext: { category }, data: { allMdx } }) => {
               title={post.node.frontmatter.title}
               date={post.node.frontmatter.date}
               excerpt={post.node.excerpt}
-              timeToRead={post.node.timeToRead}
               slug={post.node.fields.slug}
               categories={post.node.frontmatter.categories}
               key={post.node.fields.slug}
@@ -100,7 +97,6 @@ export const postQuery = graphql`
             slug
           }
           excerpt(pruneLength: 300)
-          timeToRead
         }
       }
     }
