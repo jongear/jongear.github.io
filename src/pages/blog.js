@@ -93,7 +93,7 @@ BlogPage.propTypes = {
 
 export const BlogQuery = graphql`
   query BlogQuery {
-    allMdx(sort: { fields: [frontmatter___date], order: DESC }) {
+    allMdx(sort: {frontmatter: {date: DESC}}) {
       edges {
         node {
           fields {

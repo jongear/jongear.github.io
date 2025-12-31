@@ -126,7 +126,7 @@ export const postQuery = graphql`
       parent {
         ... on File {
           mtime
-          birthtime
+          birthTime
         }
       }
     }

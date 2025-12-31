@@ -72,7 +72,7 @@ Category.propTypes = {
 export const postQuery = graphql`
   query CategoriesPage {
     allMdx {
-      group(field: frontmatter___categories) {
+      group(field: {frontmatter: {categories: SELECT}}) {
         fieldValue
         totalCount
       }
