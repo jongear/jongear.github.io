@@ -9,7 +9,7 @@ const wrapper = promise =>
     return result;
   });
 
-exports.onCreateNode = ({ node, actions }) => {
+exports.onCreateNode = ({ node, actions, getNode }) => {
   const { createNodeField } = actions;
 
   let slug;
@@ -27,6 +27,16 @@ exports.onCreateNode = ({ node, actions }) => {
       slug = `/${_.kebabCase(node.frontmatter.title)}`;
     }
     createNodeField({ node, name: 'slug', value: slug });
+
+    // Calculate reading time
+    const parent = getNode(node.parent);
+    if (parent && parent.internal && parent.internal.content) {
+      const content = parent.internal.content;
+      const wordsPerMinute = 200;
+      const wordCount = content.split(/\s+/).length;
+      const readingTime = Math.ceil(wordCount / wordsPerMinute);
+      createNodeField({ node, name: 'timeToRead', value: readingTime });
+    }
   }
 };
 

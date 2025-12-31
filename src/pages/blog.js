@@ -72,6 +72,7 @@ const BlogPage = ({
             date={post.node.frontmatter.date}
             excerpt={post.node.excerpt}
             slug={post.node.fields.slug}
+            timeToRead={post.node.fields.timeToRead}
             categories={post.node.frontmatter.categories}
             key={post.node.fields.slug}
           />
@@ -98,6 +99,7 @@ export const BlogQuery = graphql`
         node {
           fields {
             slug
+            timeToRead
           }
           frontmatter {
             title
