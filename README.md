@@ -2,6 +2,8 @@
 
 # Jon Gear's Website And Blog
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4771c8dc-35e6-45fa-96d2-158d20f5c2d0/deploy-status)](https://app.netlify.com/projects/gear-dev/deploys)
+
 Thanks for checking out my site. This is the complete code for my website and blog.
 
 ## Setup
