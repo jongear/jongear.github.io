@@ -16,7 +16,7 @@ Thanks for checking out my site. This is the complete code for my website and bl
 - **Syntax Highlighting:** [Prism React Renderer](https://github.com/FormidableLabs/prism-react-renderer)
 - **Deployment:** [Netlify](https://www.netlify.com/)
 - **CI/CD:** [GitHub Actions](https://github.com/features/actions)
-- **Node.js:** v20.x
+- **Node.js:** v22.x
 
 ## Setup
 
@@ -103,7 +103,7 @@ My site uses a comprehensive CI/CD pipeline with [GitHub Actions](https://docs.g
 Every pull request triggers automated checks:
 - **Linting:** ESLint checks for code quality
 - **Build Verification:** Ensures the site builds successfully
-- **Node.js:** Tests run on Node 20.x
+- **Node.js:** Tests run on Node 22.x
 
 ### CD Pipeline (Netlify)
 
