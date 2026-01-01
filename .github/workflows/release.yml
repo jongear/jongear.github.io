@@ -31,17 +31,18 @@ jobs:
       - name: Archive build artifacts
         run: |
           cd public
-          zip -r ../redact-check-build.zip .
+          zip -r ../website-build.zip .
           cd ..
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
-          path: redact-check-build.zip
+          path: website-build.zip
 
   release:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Checkout
         uses: actions/checkout@v4
