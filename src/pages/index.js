@@ -191,6 +191,9 @@ const IndexPage = () => {
                 <a href="/blog">Blog</a>
               </li>
               <li>
+                <a href="/tools">Tools</a>
+              </li>
+              <li>
                 <a href="https://www.threads.com/@jongeardev" target="_blank">
                   Threads
                 </a>
