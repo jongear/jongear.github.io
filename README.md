@@ -48,6 +48,52 @@ The site will be available at `http://localhost:8000`
 - `npm run lint` - Run ESLint
 - `npm run serve` - Serve the production build locally
 
+### Makefile Commands
+
+For convenience, common tasks are available via Make commands. Run `make help` to see all available commands:
+
+```sh
+make help
+```
+
+#### Quick Reference
+
+**Development:**
+```sh
+make install      # Install dependencies
+make dev          # Start development server (alias: make start)
+make build        # Build production site
+make serve        # Serve production build locally
+```
+
+**Code Quality:**
+```sh
+make lint         # Run ESLint
+make lint-fix     # Auto-fix linting issues
+make test         # Run all tests (lint + build)
+```
+
+**Maintenance:**
+```sh
+make clean        # Clean build artifacts (.cache, public)
+make clean-all    # Clean everything including node_modules
+make fresh        # Fresh install (clean-all + install)
+make rebuild      # Clean rebuild (clean + build)
+```
+
+**Dependencies:**
+```sh
+make audit        # Run npm security audit
+make audit-fix    # Auto-fix security issues
+make upgrade      # Update all dependencies
+```
+
+**Utilities:**
+```sh
+make version      # Show current version
+make info         # Show project information
+```
+
 ## Deployment
 
 My site uses a comprehensive CI/CD pipeline with [GitHub Actions](https://docs.github.com/en/actions) and [Netlify](https://www.netlify.com/):
