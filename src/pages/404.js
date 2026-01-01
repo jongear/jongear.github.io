@@ -160,8 +160,8 @@ const NotFoundPage = () => {
                 <a href="/blog">Blog</a>
               </li>
               <li>
-                <a href="https://twitter.com/JonGearDev" target="_blank">
-                  Twitter
+                <a href="https://www.threads.com/@jongeardev" target="_blank">
+                  Threads
                 </a>
               </li>
               <li>
