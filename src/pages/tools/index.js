@@ -66,18 +66,22 @@ const Tools = () => (
       <Content>
         <h1>Tools</h1>
         <p>
-          A collection of tools and projects I have built. These are designed to solve
-          specific problems and are available for anyone to use.
+          A collection of tools and projects I have built. These are designed to
+          solve specific problems and are available for anyone to use.
         </p>
 
         <ToolCard>
           <h3>PDF Redaction Checker</h3>
           <p>
-            A tool for finding and removing bad redactions in PDF documents. This helps
-            identify text that appears redacted visually but is still accessible in the
-            document, which can be a security risk.
+            A tool for finding and removing bad redactions in PDF documents.
+            This helps identify text that appears redacted visually but is still
+            accessible in the document, which can be a security risk.
           </p>
-          <a href="/tools/redact-check" target="_blank" rel="noopener noreferrer">
+          <a
+            href="/tools/redact-check"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Launch Tool →
           </a>
         </ToolCard>
