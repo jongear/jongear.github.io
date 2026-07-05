@@ -49,7 +49,7 @@ const Container = styled.div`
   min-height: 95vh;
 
   margin: 0 auto;
-  max-width: 960;
+  max-width: 960px;
   padding: 0px 2.5875rem 1.45rem;
   padding-top: 0;
 
@@ -169,52 +169,70 @@ const Links = styled.ul`
   }
 `;
 
-const IndexPage = () => {
+const IndexPage = () => (
+  <ThemeProvider theme={theme}>
+    <>
+      <GlobalStyle />
+      <Container>
+        <Card>
+          <Logo>
+            <img className="img-circle" src={logo} />
+          </Logo>
+          <Welcome>Hello, I&apos;m Jon</Welcome>
+          <Tagline>
+            I have a passion for distributed systems, machine learning and
+            brain-computer interfaces.
+          </Tagline>
+          <Links>
+            <li>
+              <a href="/blog">Blog</a>
+            </li>
+            <li>
+              <a href="/tools">Tools</a>
+            </li>
+            <li>
+              <a href="/links">Links</a>
+            </li>
+            <li>
+              <a
+                href="https://www.instagram.com/jon.gear.dev"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Instagram
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://www.threads.com/@jongeardev"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Threads
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/jongear"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href="/contact">Contact</a>
+            </li>
+          </Links>
+        </Card>
+      </Container>
+    </>
+  </ThemeProvider>
+);
+
+export const Head = () => {
   const buildTime = useBuildTime();
-  return (
-    <ThemeProvider theme={theme}>
-      <>
-        <SEO buildTime={buildTime} />
-        <GlobalStyle />
-        <Container>
-          <Card>
-            <Logo>
-              <img className="img-circle" src={logo} />
-            </Logo>
-            <Welcome>Hello, I'm Jon</Welcome>
-            <Tagline>
-              I have a passion for distributed systems, machine learning and
-              brain-computer interfaces.
-            </Tagline>
-            <Links>
-              <li>
-                <a href="/blog">Blog</a>
-              </li>
-              <li>
-                <a href="/tools">Tools</a>
-              </li>
-              <li>
-                <a href="https://www.threads.com/@jongeardev" target="_blank">
-                  Threads
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/jongear" target="_blank">
-                  GitHub
-                </a>
-              </li>
-              {/* <li>
-                <a href="/resume">Resume</a>
-              </li> */}
-              <li>
-                <a href="/contact">Contact</a>
-              </li>
-            </Links>
-          </Card>
-        </Container>
-      </>
-    </ThemeProvider>
-  );
+  return <SEO buildTime={buildTime} />;
 };
 
 export default IndexPage;

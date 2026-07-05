@@ -1,8 +1,7 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import { Link } from 'gatsby';
 import styled from 'styled-components';
-import { Layout, Wrapper, Header, Button } from '../components';
+import { Layout, Wrapper, Header, Button, SEO } from '../components';
 const logo = '/images/logo.svg';
 import config from '../config/website';
 
@@ -43,7 +42,6 @@ const Content = styled.div`
 const Contact = () => (
   <Layout>
     <Wrapper>
-      <Helmet title={`Contact | ${config.siteTitle}`} />
       <Header>
         <Link to="/">
           <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
@@ -90,5 +88,7 @@ const Contact = () => (
     </Wrapper>
   </Layout>
 );
+
+export const Head = () => <SEO title="Contact" />;
 
 export default Contact;

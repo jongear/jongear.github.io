@@ -1,8 +1,7 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import { Link } from 'gatsby';
 import styled from 'styled-components';
-import { Layout, Wrapper, Header } from '../components';
+import { Layout, Wrapper, Header, SEO } from '../components';
 const logo = '/images/logo.svg';
 import config from '../config/website';
 
@@ -41,7 +40,6 @@ const Content = styled.div`
 const Success = () => (
   <Layout>
     <Wrapper>
-      <Helmet title={`Contact | ${config.siteTitle}`} />
       <Header>
         <Link to="/">
           <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
@@ -55,5 +53,7 @@ const Success = () => (
     </Wrapper>
   </Layout>
 );
+
+export const Head = () => <SEO title="Message Sent" />;
 
 export default Success;

@@ -57,7 +57,7 @@ const PostContent = styled.div`
 `;
 
 const Post = ({
-  pageContext: { slug, prev, next },
+  pageContext: { prev, next },
   data: { mdx: postNode },
   children,
 }) => {
@@ -66,7 +66,6 @@ const Post = ({
   return (
     <Layout>
       <Wrapper>
-        <SEO postPath={slug} postNode={postNode} article />
         <Header>
           <Link to="/blog">{config.blogTitle}</Link>
         </Header>
@@ -89,11 +88,14 @@ const Post = ({
   );
 };
 
+export const Head = ({ pageContext: { slug }, data: { mdx } }) => (
+  <SEO postPath={slug} postNode={mdx} article />
+);
+
 export default Post;
 
 Post.propTypes = {
   pageContext: PropTypes.shape({
-    slug: PropTypes.string.isRequired,
     next: PropTypes.object,
     prev: PropTypes.object,
   }).isRequired,
@@ -108,6 +110,15 @@ Post.defaultProps = {
     next: null,
     prev: null,
   }),
+};
+
+Head.propTypes = {
+  pageContext: PropTypes.shape({
+    slug: PropTypes.string.isRequired,
+  }).isRequired,
+  data: PropTypes.shape({
+    mdx: PropTypes.object.isRequired,
+  }).isRequired,
 };
 
 export const postQuery = graphql`

@@ -1,11 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 
 import config from '../config/website';
 
 const SEO = (props) => {
-  const { postNode, postPath, article, buildTime } = props;
+  const {
+    postNode,
+    postPath,
+    article,
+    buildTime,
+    title: pageTitle,
+    description: pageDescription,
+  } = props;
 
   let title;
   let description;
@@ -21,6 +27,9 @@ const SEO = (props) => {
     title = `${postMeta.title} | ${config.siteTitle}`;
     description = postNode.excerpt;
     publishedDate = postNode.frontmatter.date;
+  } else if (pageTitle) {
+    title = `${pageTitle} | ${config.siteTitle}`;
+    description = pageDescription || config.siteDescription;
   } else {
     title = config.siteTitleAlt;
     description = config.siteDescription;
@@ -153,8 +162,7 @@ const SEO = (props) => {
   };
 
   return (
-    <Helmet>
-      <html lang={config.siteLanguage} />
+    <>
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="image" content={image} />
@@ -194,7 +202,7 @@ const SEO = (props) => {
         </script>
       )}
       <script type="application/ld+json">{JSON.stringify(breadcrumb)}</script>
-    </Helmet>
+    </>
   );
 };
 
@@ -205,6 +213,8 @@ SEO.propTypes = {
   postPath: PropTypes.string,
   article: PropTypes.bool,
   buildTime: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
 };
 
 SEO.defaultProps = {
@@ -212,4 +222,6 @@ SEO.defaultProps = {
   postPath: null,
   article: false,
   buildTime: null,
+  title: null,
+  description: null,
 };

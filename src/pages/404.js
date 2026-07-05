@@ -49,7 +49,7 @@ const Container = styled.div`
   min-height: 95vh;
 
   margin: 0 auto;
-  max-width: 960;
+  max-width: 960px;
   padding: 0px 2.5875rem 1.45rem;
   padding-top: 0;
 
@@ -60,7 +60,7 @@ const Container = styled.div`
 
   @media only screen and (max-width: 640px) {
     margin: 0 auto;
-    max-width: 960;
+    max-width: 960px;
     padding: 0px;
   }
 `;
@@ -139,48 +139,57 @@ const Links = styled.ul`
   }
 `;
 
-const NotFoundPage = () => {
+const NotFoundPage = () => (
+  <ThemeProvider theme={theme}>
+    <>
+      <GlobalStyle />
+      <Container>
+        <Card>
+          <Logo>
+            <img className="img-circle" src={logo} />
+          </Logo>
+          <Header>Opps!</Header>
+          <Description>
+            We can&apos;t find the page you are looking for.
+          </Description>
+          <Links>
+            <li>
+              <a href="/blog">Blog</a>
+            </li>
+            <li>
+              <a href="/links">Links</a>
+            </li>
+            <li>
+              <a
+                href="https://www.threads.com/@jongeardev"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Threads
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/jongear"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                GitHub
+              </a>
+            </li>
+            <li>
+              <a href="/contact">Contact</a>
+            </li>
+          </Links>
+        </Card>
+      </Container>
+    </>
+  </ThemeProvider>
+);
+
+export const Head = () => {
   const buildTime = useBuildTime();
-  return (
-    <ThemeProvider theme={theme}>
-      <>
-        <SEO buildTime={buildTime} />
-        <GlobalStyle />
-        <Container>
-          <Card>
-            <Logo>
-              <img className="img-circle" src={logo} />
-            </Logo>
-            <Header>Opps!</Header>
-            <Description>
-              We can't find the page you are looking for.
-            </Description>
-            <Links>
-              <li>
-                <a href="/blog">Blog</a>
-              </li>
-              <li>
-                <a href="https://www.threads.com/@jongeardev" target="_blank">
-                  Threads
-                </a>
-              </li>
-              <li>
-                <a href="https://github.com/jongear" target="_blank">
-                  GitHub
-                </a>
-              </li>
-              {/* <li>
-                <a href="/resume">Resume</a>
-              </li> */}
-              <li>
-                <a href="/contact">Contact</a>
-              </li>
-            </Links>
-          </Card>
-        </Container>
-      </>
-    </ThemeProvider>
-  );
+  return <SEO buildTime={buildTime} />;
 };
 
 export default NotFoundPage;
