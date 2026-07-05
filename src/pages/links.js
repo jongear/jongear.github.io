@@ -104,6 +104,10 @@ const links = [
     href: 'https://www.instagram.com/jon.gear.dev',
   },
   {
+    label: 'Proletariat Crew',
+    href: 'https://proletariatcrew.com',
+  },
+  {
     label: 'Threads — @jongeardev',
     href: 'https://www.threads.com/@jongeardev',
   },
