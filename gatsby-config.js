@@ -11,7 +11,6 @@ module.exports = {
     description: "Jon Gear's Portfolio",
   },
   plugins: [
-    'gatsby-plugin-react-helmet',
     'gatsby-plugin-styled-components',
     'gatsby-plugin-twitter',
     'gatsby-plugin-sharp',

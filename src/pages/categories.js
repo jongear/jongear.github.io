@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link, graphql } from 'gatsby';
 import styled from 'styled-components';
 import kebabCase from 'lodash/kebabCase';
 const logo = '/images/logo.svg';
-import { Layout, Wrapper, Header, SectionTitle } from '../components';
+import { Layout, Wrapper, Header, SectionTitle, SEO } from '../components';
 import config from '../config/website';
 
 const Content = styled.div`
@@ -37,7 +36,6 @@ const Category = ({
 }) => (
   <Layout>
     <Wrapper>
-      <Helmet title={`Categories | ${config.siteTitle}`} />
       <Header>
         <Link to="/blog">
           <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
@@ -58,6 +56,8 @@ const Category = ({
     </Wrapper>
   </Layout>
 );
+
+export const Head = () => <SEO title="Categories" />;
 
 export default Category;
 

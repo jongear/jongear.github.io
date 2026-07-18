@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import { Link, graphql } from 'gatsby';
 import styled from 'styled-components';
 import contactImg from '../images/contact.svg';
-import { Layout, Article, Wrapper, Button, SectionTitle } from '../components';
+import {
+  Layout,
+  Article,
+  Wrapper,
+  Button,
+  SectionTitle,
+  SEO,
+} from '../components';
 
 const Content = styled.div`
   grid-column: 2;
@@ -81,6 +88,8 @@ const BlogPage = ({
     </Wrapper>
   </Layout>
 );
+
+export const Head = () => <SEO title="Blog" />;
 
 export default BlogPage;
 

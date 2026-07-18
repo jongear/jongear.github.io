@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import { Link, graphql } from 'gatsby';
 import styled from 'styled-components';
 import {
@@ -10,6 +9,7 @@ import {
   Subline,
   Article,
   SectionTitle,
+  SEO,
 } from '../components';
 import config from '../config/website';
 
@@ -38,7 +38,6 @@ const Category = ({ pageContext: { category }, data: { allMdx } }) => {
   return (
     <Layout>
       <Wrapper>
-        <Helmet title={`Category: ${category} | ${config.siteTitle}`} />
         <Header>
           <Link to="/blog">{config.blogTitle}</Link>
         </Header>
@@ -64,7 +63,17 @@ const Category = ({ pageContext: { category }, data: { allMdx } }) => {
   );
 };
 
+export const Head = ({ pageContext: { category } }) => (
+  <SEO title={`Category: ${category}`} />
+);
+
 export default Category;
+
+Head.propTypes = {
+  pageContext: PropTypes.shape({
+    category: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 Category.propTypes = {
   pageContext: PropTypes.shape({

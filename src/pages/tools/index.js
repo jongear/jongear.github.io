@@ -1,8 +1,7 @@
 import React from 'react';
-import Helmet from 'react-helmet';
 import { Link } from 'gatsby';
 import styled from 'styled-components';
-import { Layout, Wrapper, Header } from '../../components';
+import { Layout, Wrapper, Header, SEO } from '../../components';
 const logo = '/images/logo.svg';
 import config from '../../config/website';
 
@@ -56,7 +55,6 @@ const ToolCard = styled.div`
 const Tools = () => (
   <Layout>
     <Wrapper>
-      <Helmet title={`Tools | ${config.siteTitle}`} />
       <Header>
         <Link to="/">
           <img src={logo} style={{ height: '25px', paddingRight: '10px' }} />
@@ -89,5 +87,7 @@ const Tools = () => (
     </Wrapper>
   </Layout>
 );
+
+export const Head = () => <SEO title="Tools" />;
 
 export default Tools;
